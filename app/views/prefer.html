@@ -1,0 +1,382 @@
+<div class="view">
+    <div class="view-title">
+        <span class="pay-icon"></span>
+        个人中心
+    </div>
+    <div class="view-tab">
+        <a href="#/prefer/profile" ng-class="{select:tab=='profile'}" class="link">修改昵称</a>
+        <a href="#/prefer/pass" ng-class="{select:tab=='pass'}" class="link">密码设定</a>
+        <a href="#/prefer/info" ng-class="{select:tab=='info'}" class="link">彩种信息</a>
+        <a href="#/prefer/msg" ng-class="{select:tab=='msg'}" class="link">站内信</a>
+    </div>
+    <div class="view-content" ng-show="tab=='pass'">
+        <div ng-show="status=='err_pwd'" class="ui-tiptext-container ui-tiptext-container-error">
+            <p class="ui-tiptext ui-tiptext-error">
+                <i class="ui-tiptext-icon iconfont error" title="出错"></i>
+                <span>{{msg_pwd}}</span>
+            </p>
+        </div>
+        <div ng-show="status=='ok_pwd'" class="ui-tiptext-container ui-tiptext-container-success ">
+            <p class="ui-tiptext ui-tiptext-success">
+                <i class="ui-tiptext-icon iconfont success" title="成功"></i> 密码修改成功。
+            </p>
+        </div>
+        <table width="100%" border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+            <tr>
+                <td width="100" height="35" align="right">旧密码：</td>
+                <td width="160">
+                    <input ng-model="oldpwd" id="oldpwd" name="原密码" class="input_1" required="" type="password"
+                           minlength="6" maxlength="20" data-widget-cid="widget-8" data-explain="请输入原密码。">
+                </td>
+                <td>
+                    <div ng-show="oldpwd.length<6" class="ui-form-explain">请输入原密码。</div>
+                </td>
+            </tr>
+            <tr>
+                <td height="35" align="right">新密码：</td>
+                <td width="160">
+                    <input ng-model="password" id="password" name="新密码" type="password" class="input_1" required=""
+                           minlength="6" data-widget-cid="widget-9" data-explain="密码的长度必须大于或等于6。">
+                </td>
+                <td>
+                    <div ng-show="password.length<6" class="ui-form-explain">密码的长度必须大于或等于6。</div>
+                </td>
+            </tr>
+            <tr>
+                <td height="35" align="right">重复密码：</td>
+                <td width="160">
+                    <input ng-model="password2" id="password-confirmation" name="password-confirmation" type="password"
+                           required="" class="input_1">
+
+                    <div class="ui-form-explain"></div>
+                </td>
+                <td>
+                    <div ng-show="password2.length<6" class="ui-form-explain">密码的长度必须大于或等于6。</div>
+                    <div ng-show="password!=password2" class="ui-form-explain">两次输入的密码不一致</div>
+                </td>
+            </tr>
+            <tr>
+                <td height="30" align="right">&nbsp;</td>
+                <td>
+                    <a ng-click="modiPwd()" href="javascript:;"><img src="../static/images/level/but06.png" width="123"
+                                                                     height="50" style="margin-top: 23px;"/></a>
+                </td>
+            </tr>
+        </table>
+        <div class="pay-some">
+            备注：请妥善保管好您的登录密码，如遗忘请使用您的资金密码重置
+        </div>
+    </div>
+    <div class="view-content" ng-show="tab=='profile'">
+        <div class="mt10 clearfix">
+            <label class="label">昵称：</label>
+            <input type="text" class="input_1" value="彩之神话">
+        </div>
+        <div class="button profile-btn">修改</div>
+    </div>
+    <div class="view-content" ng-show="tab=='msg'">
+        <table class="table">
+            <tr>
+                <th>序号</th>
+                <th>主题</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td class="center">1</td>
+                <td width="740">这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！</td>
+                <td class="center">2014-12-18 18:14:00</td>
+                <td class="center"><span class="msg-delete">删除</span></td>
+            </tr>
+            <tr>
+                <td class="center">1</td>
+                <td width="740">这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！</td>
+                <td class="center">2014-12-18 18:14:00</td>
+                <td class="center"><span class="msg-delete">删除</span></td>
+            </tr>
+            <tr>
+                <td class="center">1</td>
+                <td width="740">这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！这是一个好消息！</td>
+                <td class="center">2014-12-18 18:14:00</td>
+                <td class="center"><span class="msg-delete">删除</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="view-content" ng-show="tab=='info'">
+        <div class="mb10 clearfix">
+            <div class="info-item active">重庆时时彩</div>
+            <div class="info-item">江西时时彩</div>
+            <div class="info-item">新疆时时彩</div>
+            <div class="info-item">广东11选5</div>
+            <div class="info-item">山东11运</div>
+            <div class="info-item">江西11选5</div>
+            <div class="info-item">重庆11选5</div>
+            <div class="info-item">福彩3D</div>
+            <div class="info-item">体彩P3</div>
+            <div class="info-item">彩王极速彩</div>
+            <div class="info-item">彩王极速11选5</div>
+            <div class="info-item">彩王高速彩</div>
+        </div>
+        <div class="table-info">
+            <table class="table table-center">
+                <tr>
+                    <th>玩法类型</th>
+                    <th>玩法分类</th>
+                    <th width="180">赔率</th>
+                    <th>返点</th>
+                    <th>状态</th>
+                </tr>
+                <tr>
+                    <td>前三直选</td>
+                    <td></td>
+                    <td class="info-money">1,800.00</td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>后三直选</td>
+                    <td></td>
+                    <td class="info-money">1,800.00</td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>前三组选</td>
+                    <td>
+                        组三<br>
+                        组六
+                    </td>
+                    <td class="info-money">
+                        600.00<br>
+                        300.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>后三组选</td>
+                    <td>
+                        组三<br>
+                        组六
+                    </td>
+                    <td class="info-money">
+                        600.00<br>
+                        300.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>三星一码不定胆</td>
+                    <td></td>
+                    <td class="info-money">
+                        6.60
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>三星二码不定胆</td>
+                    <td>
+                        组三<br>
+                        组六
+                    </td>
+                    <td class="info-money">
+                        33.60
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>二星直选</td>
+                    <td></td>
+                    <td class="info-money">
+                        180.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>二星组选</td>
+                    <td></td>
+                    <td class="info-money">
+                        90.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>定位胆</td>
+                    <td></td>
+                    <td class="info-money">
+                        18.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>二星大小单双</td>
+                    <td>
+                    </td>
+                    <td class="info-money">
+                        7.20
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>四星直选</td>
+                    <td>
+                    </td>
+                    <td class="info-money">
+                        18,000.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>四星组合</td>
+                    <td>
+                        一等奖_四星<br>
+                        二等奖_三星<br>
+                        三等奖_二星<br>
+                        四等奖_一星
+                    </td>
+                    <td class="info-money">
+                        18,000.00<br>
+                        1,800.00<br>
+                        180.00<br>
+                        18.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>四星组选</td>
+                    <td>
+                        组选24<br>
+                        组选12<br>
+                        组选6<br>
+                        组选4
+                    </td>
+                    <td class="info-money">
+                        750.00<br>
+                        1,500.00<br>
+                        3,000.00<br>
+                        4,500.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>五星直选</td>
+                    <td>
+                        五星直选
+                    </td>
+                    <td class="info-money">
+                        18,000.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>五星组合</td>
+                    <td>
+                        一等奖_五星<br>
+                        二等奖_四星<br>
+                        三等奖_三星<br>
+                        四等奖_二星<br>
+                        五等奖_一星
+                    </td>
+                    <td class="info-money">
+                        180,000.00<br>
+                        18,000.00<br>
+                        1,800.00<br>
+                        180.00<br>
+                        18.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>五星组选</td>
+                    <td>
+                        五星组选120<br>
+                        五星组选60<br>
+                        五星组选30<br>
+                        五星组选20<br>
+                        五星组选10<br>
+                        五星组选5
+                    </td>
+                    <td class="info-money">
+                        1,500.00<br>
+                        3,000.00<br>
+                        6,000.00<br>
+                        9,000.00<br>
+                        18,000.00<br>
+                        36,000.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>五星特殊号</td>
+                    <td>
+                        一帆风顺<br>
+                        好事成双<br>
+                        三星报喜<br>
+                        四季发财
+                    </td>
+                    <td class="info-money">
+                        4.30<br>
+                        22.00<br>
+                        210.00<br>
+                        3,900.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>中三直选</td>
+                    <td>
+                    </td>
+                    <td class="info-money">
+                        18,000.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>中三组选</td>
+                    <td>
+                        组三<br>
+                        组六
+                    </td>
+                    <td class="info-money">
+                        600.00<br>
+                        300.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+                <tr>
+                    <td>任选</td>
+                    <td>
+                        任二直选单式<br>
+                        任二直选复式<br>
+                        任二组选单式<br>
+                        任二组选复式
+                    </td>
+                    <td class="info-money">
+                        180.00<br>
+                        180.00<br>
+                        90.00<br>
+                        90.00
+                    </td>
+                    <td>6.4%</td>
+                    <td class="info-use">使用中</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

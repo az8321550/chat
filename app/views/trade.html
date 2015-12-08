@@ -1,0 +1,417 @@
+<div class="view">
+    <div class="view-title">
+        <span class="pay-icon"></span>
+        财政中心
+    </div>
+    <div class="view-tab">
+        <a href="#/trade/deposit" ng-class="{select:tab=='deposit'}" class="link">快速充值</a>
+        <a href="#/trade/bind" ng-class="{select:tab=='bind'}" class="link">绑卡充值</a>
+        <a href="#/trade/withdraw" ng-class="{select:tab=='withdraw'}" class="link">提款</a>
+        <a href="#/trade/record" ng-class="{select:tab=='record'}" class="link">充提记录</a>
+    </div>
+    <div class="view-content">
+        <div class="deposit-text">
+            <b style="color:#9c4601;">充值提示信息：</b><br>
+            1.每天的充值处理时间为：<span class="red">早上 9:00 至 次日凌晨4:00</span><br>
+            2.如果您未绑定银行卡，或银行卡未开通充值权限，及未在充值时间则无法进行充值。<br>
+            3.充值后,请手动刷新您的余额查看相关帐变信息,若超过3分钟未到账,请与平台在线客服联系。<br>
+            4.选择充值银行, 填写充值金额, 点击 [<span class="red">下一步</span>] 后, 将有详细文字说明及充值演示。如有疑问，请联系平台在线客服。
+        </div>
+        <div class="deposit-con">
+            <div class="deposit-row clearfix">
+                <span class="deposit-label">充值金额：</span>
+                <input ng-model="damount" type="text" class="input_1 deposit-input"/>
+                <span class="deposit-big">单笔充值限额：最低10元，最高45000元。</span>
+            </div>
+            <div class="deposit-row clearfix">
+                <span class="deposit-label">充值金额大写：</span>
+                <span class="deposit-big">壹佰元整</span>
+            </div>
+            <div class="deposit-btn">
+                <a ng-click="deposit()" href="javascript:;"><img src="../static/images/level/but06.png" width="123" height="50"/></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="21"><img src="images/level/pub_tit_01.png" width="21" height="45" /></td>
+      <td height="45" class="Pay_titbg">
+        <div class="Pay_tit">充值提现</div>
+        <div class="Pay_tit_tab">
+          <ul>
+            <a href="#/trade/deposit">
+              <li ng-class="{select:tab=='deposit'}" class="link">自动充值</li>
+            </a>
+            <a href="#/trade/withdraw">
+              <li ng-class="{select:tab=='withdraw'}" class="link">平台提现</li>
+            </a>
+            <a href="#/trade/transfer">
+              <li ng-class="{select:tab=='transfer'}" class="link">转账</li>
+            </a>
+            <a href="#/trade/record">
+              <li ng-class="{select:tab=='record'}" class="link">提现记录</li>
+            </a>
+          </ul>
+        </div>
+      </td>
+      <td width="21"><img src="images/level/pub_tit_03.png" width="21" height="45" /></td>
+    </tr>
+  </table>
+  <table ng-show="tab=='withdraw'" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="line_style01"></div>
+          <div class="R_con_tishi">
+            <span class="font01">提示信息：</span>
+            <br> 1、每天限提 <span class="font01">10 </span>次，今天您己经成功发起了<span class="font01"> 0 </span>次提现申请。
+            <br> 2、每天的提现处理时间为：
+            <span class="font01">早上9：30 至次日凌晨2：00</span>
+            <br> 3、单笔最高金额为 <span class="font01">10 </span>万。</div>
+          <table border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+            <tr>
+              <td height="30" align="right">可提现金额：</td>
+              <td valign="middle" class="font01">{{d.mnys[0].balance|number:2}}</td>
+            </tr>
+            <tr>
+              <td height="30" align="right">收款银行卡信息：</td>
+              <td>
+                <select ng-options="card.bankName+'[*********'+card.cardNum.substring(card.cardNum.length-4,card.cardNum.length)+']' for card in cards" ng-model="selectedCard" name="select" id="select" class="input_1">
+                  <option value="">请选择银行卡</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td height="30" align="right">提现金额：</td>
+              <td>
+                <input id="J-amount" ng-model="amount" type="text" name="textfield" id="textfield" class="input_1" /><span class="font02">（单笔充值限额：最低不少于{{minAmount}}元,最高不大于{{maxAmount}}元。）</span></td>
+            </tr>
+            <tr>
+              <td height="30" align="right">资金密码：</td>
+              <td>
+                <input ng-model="paypwd" class="input_1" type="password" name="spassword" id="J-spassword">
+            </tr>
+            <tr>
+              <td height="30" align="right">&nbsp;</td>
+              <td>
+                <a ng-click="apply()" href="javascript:;"><img src="images/level/but02.png" width="148" height="45" onmouseover="this.src='images/level/but02_on.png'" onmouseout="this.src='images/level/but02.png'" /></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        </td>
+        <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>
+  <table ng-show="tab=='transfer'" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="line_style01"></div>
+          <table border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+            <tr>
+              <td colspan="2">
+                <p>
+                  <h3>
+                  <span style="width:100px;display: inline-block;text-align:right;">大厅余额:</span>{{d.mnys[0].balance|number:2}}<br>
+                  <span style="width:100px;display: inline-block;text-align:right;">彩票余额:</span>{{d.mnys[1].balance|number:2}}<br>
+                  <span style="width:100px;display: inline-block;text-align:right;">AG余额:</span>{{d.mnys[2].balance|number:2}} <br>
+                  <span style="width:100px;display: inline-block;text-align:right;">PT余额:</span>0.00
+                </h3></p>
+                <br>
+                <br>
+              </td>
+            </tr>
+            <tr>
+              <td height="30" align="right">转出频道</td>
+              <td>
+                <select ng-model="fromChannel" name="select" id="select" class="input_1">
+                  <option value="useful">大厅（{{d.mnys[0].balance|number:2}}）</option>
+                  <option value="caipiao">彩票（{{d.mnys[1].balance|number:2}}）</option>
+                  <option ng-show="11==11" value="zhenren">AG真人（{{d.mnys[2].balance|number:2}}）</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td height="30" align="right">转入频道</td>
+              <td>
+                <select ng-model="toChannel" name="select" id="select" class="input_1">
+                  <option value="useful">大厅（{{d.mnys[0].balance|number:2}}）</option>
+                  <option value="caipiao">彩票（{{d.mnys[1].balance|number:2}}）</option>
+                  <option ng-show="11==11" value="zhenren">AG真人（{{d.mnys[2].balance|number:2}}）</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td height="30" align="right">转账金额：</td>
+              <td>
+                <input id="J-amount" ng-model="tamount" type="text" name="textfield" id="textfield" class="input_1" />
+              </td>
+            </tr>
+            <tr>
+              <td height="30" align="right">资金密码：</td>
+              <td>
+                <input ng-model="paypwd" class="input_1" type="password" name="spassword" id="J-spassword">
+            </tr>
+            <tr>
+              <td height="30" align="right">&nbsp;</td>
+              <td>
+                <a ng-click="transfer()" href="javascript:;"><img src="images/level/but06.png" width="148" height="45" onmouseover="this.src='images/level/but06_on.png'" onmouseout="this.src='images/level/but06.png'" /></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        </td>
+        <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>
+  <table ng-show="tab=='record'" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="R_con_lie1">
+            <ul>
+              <li>提现时间:</li>
+              <li>
+                <input ng-model="startDate" id="d4311" class="Wdate fn-left ui-input" type="text" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')||\'%y-%M-{%d}\'}'})">
+              </li>
+              <li>到</li>
+              <li>
+                <input ng-model="endDate" id="d4312" class="Wdate fn-left ui-input" type="text" onClick="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'%y-%M-{%d}'})">
+              </li>
+              <li>
+                <a ng-click="his()" href="javascript:;"><img src="images/level/chazhao.png" width="66" height="26" align="absmiddle" /></a>
+              </li>
+            </ul>
+          </div>
+          <div class="line_style01"></div>
+          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" class="table_s03">
+            <tr>
+              <th>提现编号</th>
+              <th>申请发起时间</th>
+              <th>提现银行</th>
+              <th>尾号</th>
+              <th>提现金额</th>
+              <th>状态</th>
+            </tr>
+            <tr ng-repeat="h in hiss">
+              <td align="center" bgcolor="#FFFFFF">{{h.wrId}}</td>
+              <td align="center" bgcolor="#FFFFFF">{{moment(h.createTime).format('YYYY-MM-DD HH:mm:ss')}}</td>
+              <td align="center" bgcolor="#FFFFFF">{{h.bankName}}</td>
+              <td align="center" bgcolor="#FFFFFF">{{'*********'+h.cardNum.substring(h.cardNum.length-4,h.cardNum.length)}}</td>
+              <td align="right" bgcolor="#FFFFFF">{{h.amount|number:2}}</td>
+              <td align="center" bgcolor="#FFFFFF"><span class="font03">{{h.taskName}}</span></td>
+            </tr>
+          </table>
+          &lt;!&ndash;
+          <div class="page">
+            <ul>
+              <li>总计</li>
+              <li><b>125</b></li>
+              <li>条数据，共</li>
+              <li><b>2</b></li>
+              <li>页，当前第</li>
+              <li><b>1</b></li>
+              <li>页</li>
+              <a href="javascript:;">
+                <li>
+                  <div class="li_select">1</div>
+                </li>
+              </a>
+              <a href="javascript:;">
+                <li>
+                  <div class="li_">2</div>
+                </li>
+              </a>
+              <a href="javascript:;">
+                <li>
+                  <div class="li_">3</div>
+                </li>
+              </a>
+              <a href="javascript:;">
+                <li>
+                  <div class="li_">4</div>
+                </li>
+              </a>
+              <li>转至</li>
+              <li>
+                <input type="text" name="textfield" id="textfield" class="input_2" />
+              </li>
+              <li>页</li>
+              <li><img src="images/level/go.png" width="28" height="26" /></li>
+            </ul>
+          </div> &ndash;&gt;
+        </div>
+      </td>
+      <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>-->
+<form style="display:none;" id="hiddenForm" target="_blank" method="get" action="/recharge.html"></form>
+<!--  <table ng-show="tab=='deposit'" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="font04">自动充值：</div>
+          <div class="line_style01"></div>
+          <div class="R_con_tishi">
+            <span class="font01">充值须知：</span>
+            <br /> 1、建议使用网银在线充值，及时到账，安全有保障。
+            <br /> 2、充值实时到账，无任何手续费，如出现未到账情况，请联系本站客服人员处理。
+          </div>
+          <table border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+            <tr>
+              <td height="30" valign="middle" class="banks">
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CMBC" />
+                  <img src="images/level/bank/bank_zs.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="ICBC" />
+                  <img src="images/level/bank/bank_gh.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CCB" />
+                  <img src="images/level/bank/bank_js.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="BOCOM" />
+                  <img src="images/level/bank/bank_jt.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="BOC" />
+                  <img src="images/level/bank/bank_zg.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                  <br />
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="SPDB" />
+                  <img src="images/level/bank/bank_shpf.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="PINGAN" />
+                  <img src="images/level/bank/bank_pa.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CMBCS" />
+                  <img src="images/level/bank/bank_ms.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="ABC" />
+                  <img src="images/level/bank/bank_ny.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CEBBANK" />
+                  <img src="images/level/bank/bank_gd.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                  <br />
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CIB" />
+                  <img src="images/level/bank/bank_xy.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="ECITIC" />
+                  <img src="images/level/bank/bank_zx.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="BRCB" />
+                  <img src="images/level/bank/bank_ns.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="CGB" />
+                  <img src="images/level/bank/bank_gf.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                &lt;!&ndash; <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="1" />
+                  <img src="images/level/bank/bank_fz.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                  <br />
+                </label> &ndash;&gt;
+                &lt;!&ndash; <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="1" />
+                  <img src="images/level/bank/bank_dy.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label> &ndash;&gt;
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="HXB" />
+                  <img src="images/level/bank/bank_hx.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                &lt;!&ndash;  <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="1" />
+                  <img src="images/level/bank/bank_xyxyk.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label> &ndash;&gt;
+                <br>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="PSBC" />
+                  <img src="images/level/bank/bank_yz.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="BCCB" />
+                  <img src="images/level/bank/bank_bj.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input name="bank" ng-model="bankcode" type="radio" value="BOS" />
+                  <img src="images/level/bank/bank_sh.jpg" vspace="15" align="absmiddle" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td height="30"><span class="font04">充值金额：</span>
+                <br />
+                <input ng-model="damount" type="text" name="textfield" id="textfield" class="input_1" />
+                <span class="font02">限额：10元 - 10万元</span>
+              </td>
+            </tr>
+            <tr>
+              <td height="30">
+                <a ng-click="deposit()" href="javascript:;"><img src="images/level/but06.png" width="148" height="45" onmouseover="this.src='images/level/but06_on.png'" onmouseout="this.src='images/level/but06.png'" /></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+      <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>-->
+<form style="display:none;" id="depisitForm" target="_blank" method="get" action="/recharge.html"></form>

@@ -1,0 +1,19 @@
+{
+  "name": "lottery",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "1.2.16",
+    "angular-cookies": "1.2.16",
+    "angular-resource": "1.2.16",
+    "angular-route": "1.2.16",
+    "angular-sanitize": "1.2.16",
+    "angular-ui-slider": "~0.1.3",
+    "angular-moment": "~0.10.3",
+    "angular-toastr": "~0.4.2",
+    "jquery": "1.11.1",
+    "jquery-cycle2": "~2.1.6"
+  },
+  "install": {
+    "path": "app/static/plugin"
+  }
+}

@@ -1,0 +1,451 @@
+<div class="game clearfix">
+    <div class="game-left">
+        <div class="cai_one clearfix">
+            <div class="kai">
+                <div class="title">
+                    <div class="left">{{lotto.name}} 第 <span>{{curPeriod.signature}}</span> 期剩余时间</div>
+                </div>
+                <div ng-hide="showhis" class="word03 remain-time">{{countDown}}</div>
+                <div class="remain">
+                    截止时间： <span>{{moment(curPeriod.openTime).subtract(curPeriod.game.offSaleAdvance,'seconds').format('YYYY-MM-DD HH:mm:ss')}}</span>
+                </div>
+            </div>
+            <div class="history">
+                <div class="title">
+                    <div class="left">{{lotto.name}} 第 <span>{{curPeriod.signature}}</span> 期开奖结果</div>
+                    <!--<div ng-click="showhis=!showhis" class="right">{{showhis?'当前开奖':'近期开奖'}}</div>-->
+                </div>
+                <div class="qiu">
+                    <img ng-show="previous&&!previous.numbers" src="../static/images/cai/tu.jpg" class="opening-img"
+                         width="442" height="87"/>
+                    <ul ng-style="qiu_container" ng-show="previous.numbers">
+                        <li class="{{qiu_lottoed}}" ng-repeat="n in previous.showNumbers">{{n.num}}</li>
+                    </ul>
+                </div>
+                <div class="cai-some">前三形态：组六&nbsp;&nbsp;&nbsp;&nbsp;后三形态：组三</div>
+                <a class="statistics" ng-if="lotto.histype!=='ssc'&&lotto.histype!=='eleven'&&lotto.histype!=='three'"
+                   href="/his.html?type={{lotto.histype}}&game={{lotto.label}}&length=30" target="_blank"
+                   class="fn-right">
+                    <div class="right">走势分析</div>
+                </a>
+                <a class="statistics" ng-if="lotto.histype=='ssc'"
+                   href="/his3.html?type={{lotto.histype}}&game={{lotto.label}}&length=30#five" target="_blank"
+                   class="fn-right">
+                    <div class="right">走势分析</div>
+                </a>
+                <a class="statistics" ng-if="lotto.histype=='eleven'"
+                   href="/his3.html?type={{lotto.histype}}&game={{lotto.label}}&length=30#five" target="_blank"
+                   class="fn-right">
+                    <div class="right">走势分析</div>
+                </a>
+                <a class="statistics" ng-if="lotto.histype=='three'"
+                   href="/his3.html?type={{lotto.histype}}&game={{lotto.label}}&length=30#three" target="_blank"
+                   class="fn-right">
+                    <div class="right">走势分析</div>
+                </a>
+                <!--历史-->
+                <div class="area_h" ng-show="showhis">
+                    <ul id="historycontent">
+                        <li ng-repeat="r in recent|limitTo:4">
+                            <div class="left_h">{{r.signature}}</div>
+                            <div class="left_h3"><span ng-repeat="n in r.showNumbers">{{n.num}}</span></div>
+                            <div class="left_h2">{{moment(r.openTime).format('HH:mm')}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="cai_two">
+            <div class="star_bg">
+                <ul class="clearfix">
+                    <li ng-click="selTab(tab)" ng-repeat="tab in lotto.tabs" ng-class="{sel:currentTab==tab}">
+                        {{tab.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="star_bg02">
+                <ul>
+                    <li ng-repeat="methodgroup in currentTab.methodgroups">
+                        <div class="title">{{methodgroup.name}}：</div>
+                        <div ng-click="selMethod(methodgroup,method)" ng-repeat="method in methodgroup.methods"
+                             ng-class="{'star02_sel':currentMethod==method}" class="star02">{{method.name}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="explan" style="position:relative;">
+                <div class="word">{{currentMethod.tip}}</div>
+                <div ng-mouseover="tipover0=true" ng-mouseout="tipover0=false" class="btn01">
+                    <div ng-if="tipover0" class="ssc_tip_two" style="">
+                        <div class="head"></div>
+                        <div class="body">{{currentMethod.fl}}</div>
+                        <div class="bottom"></div>
+                    </div>
+                </div>
+                <div ng-mouseover="tipover1=true" ng-mouseout="tipover1=false" class="btn02">
+                    <div ng-if="tipover1" class="ssc_tip_two" style="">
+                        <div class="head"></div>
+                        <div class="body">{{currentMethod.sm}}</div>
+                        <div class="bottom"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="wan_bg">
+                <div ng-if="currentMethod.positions" class="single_input_word02">
+                    <div class="left">
+                        <label ng-repeat="position in currentMethod.positions">
+                            <input ng-change="checkSelectingLegal()" ng-model="position.checked"
+                                   ng-checked="position.checked" type="checkbox"/>{{position.name}}
+                        </label>
+                    </div>
+                    <!-- <div class="tip"><strong>温馨提示：</strong>你选择了 <span class="span_red_s">2</span> 个位置，系统自动根据位置组合成 <span class="span_red_s">1</span> 个方案。</div> -->
+                </div>
+                <div ng-show="currentMethod.spec=='luru'" class="single_input">
+                    <textarea ng-model="luru.text" class="textarea"></textarea>
+
+                    <div class="right">
+                        <div ng-click="removeDuplication()" class="btn03_s">删除重复号</div>
+                        <input type="file" style="display:none;" file-reader="luru.text" accept=".txt" id="ifile"
+                               name="ifile"/>
+
+                        <div ng-click="resetClick()" class="btn03_s">导入文件</div>
+                        <div ng-click="luru={}" class="btn03_s">清&nbsp;&nbsp;空</div>
+                    </div>
+                    <div class="word">每一个号码之间请用一个 空格[ ]、逗号[,]或者分号[;]隔开</div>
+                </div>
+                <div ng-repeat="row in currentMethod.rows"
+                     ng-if="currentMethod.spec=='number'||currentMethod.spec=='teshuhao'||currentMethod.spec=='daxiaodanshuang'||currentMethod.spec=='box'"
+                     class="wan_list">
+                    <div ng-style="style_rowname" class="left">{{row.name}}</div>
+                    <div ng-style="style_mid"
+                         ng-class="{'mid_xuan':currentMethod.spec=='box'||currentMethod.spec=='teshuhao'}" class="mid">
+                        <span ng-class="{'sel':curTicket[row.name][n.value]==1,span:(currentMethod.spec=='box'||currentMethod.spec=='teshuhao'),span1:(currentMethod.spec!=='box'&&currentMethod.spec!=='teshuhao')}"
+                              ng-click="selNum(row,n)" ng-repeat="n in row.nums">{{n.value}}</span>
+                    </div>
+                    <div ng-if="currentMethod.widget" ng-style="style_right" class="right"><span ng-click="selAll(row)">全</span><span
+                            ng-click="selBig(row)">大</span><span ng-click="selSmall(row)">小</span><span
+                            ng-click="selOdd(row)">奇</span><span ng-click="selEven(row)">偶</span><span
+                            ng-click="selNone(row)">清</span></div>
+                </div>
+                <div class="xuan_bg" style="min-height:41px; height:auto;">
+                    <div class="word01" style="margin-left: 10px;">您选择了 <span>{{selectingQty}}</span> 注，共 <span>{{selectingMny()|number:2}}</span>
+                        元，请输入倍数：
+                    </div>
+                    <div class="input">
+                        <!--<div ng-click="multi=multi-1>0?multi-1:1" class="ico_sub"></div>-->
+                        <input select-on-click ng-init="multi=1" ng-model="multi" ng-change="checkCurrMultiple($event)"
+                               type="text" class="input_bei"/>
+                        <!--<div ng-click="multi=multi*1+1<=65535?multi*1+1:65535" class="ico_add"></div>-->
+                    </div>
+                    <div class="word01" style="*margin-top:15px;">倍</div>
+                    <div class="word02">模式：</div>
+                    <span ng-class="{'active':mode==0}" ng-init="mode=0" ng-click="mode=0" class="word02-item active">元</span>
+                    <span ng-class="{'active':mode==1}" ng-click="mode=1" class="word02-item">角</span>
+                    <span ng-class="{'active':mode==2}" ng-click="mode=2" class="word02-item">分</span>
+                    <!--<div class="input" style="margin-left:20px;">
+                      <select ng-init="mode=0" ng-model="mode" style="height:20px;">
+                        <option value="0">元</option>
+                        <option value="1">角</option>
+                        <option value="2">分</option>
+                      </select>
+                    </div>
+                    <div class="word01" style="margin-left:30px;"></div>-->
+                    <!--<select class="range">
+                        <option>奖金192800-0%</option>
+                        <option>奖金192800-0%</option>
+                        <option>奖金192800-0%</option>
+                        <option>奖金192800-0%</option>
+                    </select>-->
+                    <div class="input" style="margin-top:6px;color:#fff; padding-bottom:4px;">
+                        <span ng-if="!currentMethod.mixedPrize">返点{{(selBrokerage.max-selBrokerage.val)/20|number:1}}%/奖金{{currentMethod.base*(selBrokerage.val/2000) | number:2}}</span>
+                        <li ng-if="currentMethod.mixedPrize" ng-repeat="prize in currentMethod.prizes">
+                            <em class="level">{{prize.name}}:</em><b>返点{{(selBrokerage.max-selBrokerage.val)/20|number:1}}%/奖金{{prize.base*(selBrokerage.val/2000)
+                            | number:2}}</b>
+                            <br/>
+                        </li>
+                        <div style="width:160px" ui-slider min="{{selBrokerage.min}}" max="{{selBrokerage.max}}" step="2" use-decimals ng-model="selBrokerage.val"></div>
+                    </div>
+                    <div ng-show="selectingCanBuy" ng-click="add2basket()" class="btn"></div>
+                </div>
+                <div class="xuan_tou">
+                    <div class="tou_left">
+                        <!--<div class="tou_head">
+                          <div class="left">投注项：<span>{{tickets.length}}</span></div>
+                          <div ng-click="removeTickets()" class="right"></div>
+                        </div>-->
+                        <div class="tou_body">
+                            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr ng-show="tickets.length===0">
+                                    <td class="none_l"></td>
+                                    <td colspan="7" class="none">
+                                        暂无投注项
+                                    </td>
+                                    <td class="none_r"></td>
+                                </tr>
+                                <tr ng-repeat="t in tickets">
+                                    <td class="normal_l"></td>
+                                    <td class="normal">{{t.title}}</td>
+                                    <td class="normal"><span class="ori-num">{{t.num}}</span></td>
+                                    <td class="normal">{{t.mode==0?'元':''}}{{t.mode==1?'角':''}}{{t.mode==2?'分':''}}</td>
+                                    <td class="normal">{{t.qty}}注</td>
+                                    <td class="normal">{{t.multi}}倍</td>
+                                    <td class="normal">{{t.mny|number:2}}元</td>
+                                    <td class="normal">
+                                        <a ng-click="removeTicket($index)" href="javascript:;"><img
+                                                src="../static/images/cai/del02.png" width="9" height="9"/></a>
+                                    </td>
+                                    <td class="normal_r"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tou-foot clearfix">
+                        <label class="tou-foot-zhui">
+                            <input type="checkbox"> 追号
+                        </label>
+                        <span class="cai-spa">|</span>
+
+                        <div class="tou-foot-list">己选择[<span>{{t_qty_sum}}</span>]单</div>
+                        <span class="cai-spa">|</span>
+
+                        <div class="tou-foot-list">总注数<span>{{t_qty_sum}}</span>注</div>
+                        <span class="cai-spa">|</span>
+
+                        <div class="tou-foot-list">总金额：<span>{{t_mny_sum|number:2}}</span> 元</div>
+                        <!--<div class="tou-foot-list">
+                          <div style="float:left;">未来期：</div>
+                          <div class="sel">
+                            <select ng-model="chase.startp" ng-options="p.signature for p in futurePeriods" style="height:22px;">
+                              &lt;!&ndash; <option value="">{{curPeriod.signature}}(当前期)</option> &ndash;&gt;
+                            </select>
+                          </div>
+                        </div>-->
+                        <div ng-show="tickets.length==1" ng-click="isChase=!isChase" class="btn01"></div>
+                        <div ng-click="purchaseConfirm()" ng-click="" class="btn02"
+                             style="float:right;margin-right:5px"></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-init="chase.chaseType='same'" ng-show="isChase" class="tip_zhui">
+                <div class="body">
+                    <div class="one">
+                        <div class="title">我要追号：</div>
+                        <div class="check">
+                            <input ng-model="cancelOnWin" type="checkbox" checked/>
+                        </div>
+                        <div class="word">中奖后停止追号</div>
+                    </div>
+                    <div class="two">
+                        <ul>
+                            <li ng-click="chase.chaseType='same'" ng-class="{'sel':chase.chaseType==='same'}">同倍追号</li>
+                            <li ng-click="chase.chaseType='times'" ng-class="{'sel':chase.chaseType==='times'}">翻倍追号
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="three">
+                        <div class="word02">可追号期数：<span>{{futurePeriods.length}}</span> 期 &nbsp;&nbsp;&nbsp;追号总金额：<span>{{chase_sum|number:2}}</span>
+                            元
+                        </div>
+                        <div ng-show="chase.chaseType==='same'" class="word">追号计划：起始倍数</div>
+                        <input ng-show="chase.chaseType==='same'" select-on-click ng-model="chase.chaseMulti"
+                               type="text" class="form-control">
+
+                        <div class="word">追号期数</div>
+                        <input select-on-click ng-init="chase.chaseCount=5" ng-model="chase.chaseCount" type="text"
+                               class="word">
+
+                        <div ng-show="chase.chaseType==='times'" class="word">每</div>
+                        <input ng-show="chase.chaseType==='times'" ng-init="chase.chaseGutter=1" select-on-click
+                               ng-model="chase.chaseGutter" type="text" class="form-control">
+
+                        <div ng-show="chase.chaseType==='times'" class="word">期</div>
+                        <div ng-show="chase.chaseType==='times'" class="word">乘</div>
+                        <input ng-show="chase.chaseType==='times'" ng-init="chase.chaseTimes=2" select-on-click
+                               ng-model="chase.chaseTimes" type="text" class="form-control">
+
+                        <div ng-show="chase.chaseType==='times'" class="word">倍</div>
+                        <!-- <div class="btn"></div> -->
+                    </div>
+                    <div class="four">
+                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" class="table">
+                            <tr>
+                                <th width="50">序号</th>
+                                <th width="280">期号</th>
+                                <th width="100">倍数</th>
+                                <th width="200">金额</th>
+                                <th>截止时间</th>
+                            </tr>
+                            <tr ng-repeat="p in futurePeriods|after:chase.startp|limitTo:chase.chaseCount">
+                                <td align="center">
+                                    {{$index+1}}
+                                </td>
+                                <td style="padding-left:20px;">{{p.signature}}</td>
+                                <td style="padding-left:25px;">
+                                    <input ng-change="chaseSum()" select-on-click ng-model="p.chaseMulti" type="text"
+                                           class="text">&nbsp;倍
+                                </td>
+                                <td align="center">￥{{p.chaseMulti/tickets[0].multi*tickets[0].mny|number:2}}</td>
+                                <td align="center">{{moment(p.openTime).format('YYYY-MM-DD HH:mm:ss')}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chedan_bg">
+            <div class="head">
+                <div class="record">
+                    <label>投注记录：</label>
+                    <span><a id="load_trigger" href="javascript:;" title="点击刷新" ng-click="loadRecords()"><img
+                            src="../static/images/level/shuaxin.png" width="39" height="14" hspace="5"
+                            align="absmiddle"/></a></span>
+                </div>
+            </div>
+            <div class="body" style="border:none;">
+                <div class="table-game">
+                    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table">
+                        <tr>
+                            <th>参与时间</th>
+                            <th>彩种期号</th>
+                            <th>玩法</th>
+                            <th>投注内容</th>
+                            <th>金额</th>
+                            <th>奖金</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr ng-repeat="r in records|orderBy:['-orderTime','-period']|limitTo:10">
+                            <td>{{moment(r.orderTime).format('YYYY-MM-DD HH:mm:ss')}}</td>
+                            <td class="red">{{r.period}}</td>
+                            <td>{{vocabulary.name(r.method)}}</td>
+                            <td class="red">
+                                <span ng-click="showNumber(r)" title="{{r.originalNumbers}}" class="ori-num">{{showLiteral(r.game,r.method,r.originalNumbers)}}</span>
+
+                                <div class="num-tip font02 shownum{{r.code}} fn-hide" style="position:relative;">&nbsp;
+                                    <div class="tip_order">
+                                        <div class="head_o">号码详情：</div>
+                                        <div class="area_o">{{showLiteral(r.game,r.method,r.originalNumbers)}}</div>
+                                        <div class="close_o"><a ng-click="dismissNumber(r)" href="javascript:;">【关闭】</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="tr">
+                                {{r.amount|number:2}}
+                            </td>
+                            <td class="tr">
+                                {{r.prize|number:2}}
+                            </td>
+                            <td>
+                                <span class="cai-close" ng-click="dismantle(r)" ng-show="r.status=='ORDERED'"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="c_wei"></div>
+        </div>
+    </div>
+    <div class="game-right">
+        <div class="recent">
+            <div class="recent-title">近期开奖号码</div>
+            <div ng-repeat="r in recent|limitTo:10">
+                <div class="recent-item clearfix">
+                    <span class="recent-left">{{r.signature}}</span>
+                    <span class="recent-right"><span ng-repeat="n in r.showNumbers">{{n.num}},</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="reward">
+            <div class="recent-title">近期中奖播报</div>
+            <div ng-init="reward=[1,2,3,4,5,6,7,8,9,0]"></div>
+            <div ng-repeat="item in reward">
+                <div class="reward1-item clearfix">
+                    <span class="reward-left">一网情*****</span>
+                    <span class="reward-right">喜中 <b>1204.00</b>元</span>
+                </div>
+            </div>
+        </div>
+        <div class="ad">
+            <div class="cycle-slideshow2"
+                 data-cycle-slides=".banner-item-ad"
+                 data-cycle-fx="scrollHorz" data-cycle-log="false"
+                 data-cycle-timeout="10000"
+                 data-cycle-pager=".cycle-pager2"
+                 data-cycle-pager-template="<span></span>"
+                    >
+                <div class="banner-item-ad"
+                     style='background: url("../static/images/cai/ad.jpg") no-repeat top center;'></div>
+                <div class="banner-item-ad"
+                     style='background: url("../static/images/cai/ad.jpg") no-repeat top center;'></div>
+                <div class="banner-item-ad"
+                     style='background: url("../static/images/cai/ad.jpg") no-repeat top center;'></div>
+                <div class="banner-item-ad"
+                     style='background: url("../static/images/cai/ad.jpg") no-repeat top center;'></div>
+            </div>
+            <div class="cycle-pager cycle-pager2"></div>
+        </div>
+    </div>
+</div>
+<div class="fn-hide" id="vt">
+    <table class="ui-table ui-table-inbox" style="border:0;">
+        <tr>
+            <td>单号：</td>
+            <td colspan="5">{{viewingTicket.code}}</td>
+        </tr>
+        <tr>
+            <td>游戏：</td>
+            <td>{{vocabulary.name(viewingTicket.game)}}</td>
+            <td>玩法：</td>
+            <td>{{vocabulary.name(viewingTicket.method)}}</td>
+            <td>投注号码：</td>
+            <td>
+                <p style="width: 106px;max-height: 66px;overflow-y: auto;display: inline-block; word-break: break-word;">
+                    {{showLiteral(viewingTicket.game,viewingTicket.method,viewingTicket.originalNumbers)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td>模式：</td>
+            <td>{{vocabulary.name(viewingTicket.mode)}}</td>
+            <td>倍数：</td>
+            <td>{{viewingTicket.multi}}</td>
+            <td>开奖号码：</td>
+            <td>{{viewingTicket.numbers}}</td>
+        </tr>
+        <tr>
+            <td>投注时间：</td>
+            <td>{{moment(viewingTicket.orderTime).format('YYYY-MM-DD HH:mm:ss')}}</td>
+            <td>期号：</td>
+            <td>{{viewingTicket.period}}</td>
+            <td>中奖金额：</td>
+            <td>{{viewingTicket.prize|number:2}}</td>
+        </tr>
+        <tr>
+            <td>投注金额：</td>
+            <td>{{viewingTicket.amount}}</td>
+            <td>返点率：</td>
+            <td>{{viewingTicket.brokerage/10}}%</td>
+            <td>状态：</td>
+            <td>{{viewingTicket.won?'已中奖':vocabulary.name(viewingTicket.status)}}</td>
+        </tr>
+    </table>
+</div>
+<!--ui purchase confirm-->
+<div class="fn-hide">
+    <div id="purConfirm" title="">
+        <ul class="ui-list-bets">
+            <li ng-repeat="ticket in tickets">
+                <div class="code">
+                    <span class="bet-list-method">{{ticket.title}}</span>
+                    <span class="ori-num" style="float:none;">{{ticket.num}}</span>
+          <span class="bet-details">
+            [{{ticket.qty}}注|
+            <em class="bet-list-mode">{{t.mode==0?'元':''}}{{t.mode==1?'角':''}}{{t.mode==2?'分':''}}</em>模式|
+            <em class="bet-list-times">{{ticket.multi}}</em>倍|
+            <em class="bet-list-money">{{ticket.mny|number:2}}</em>元|
+            <em class="bet-list-rebate">{{ticket.brokerage/10|number:1}}</em>%]
+          </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

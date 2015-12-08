@@ -1,0 +1,42 @@
+<div class="pad">
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="27"><img src="../static/images/level/note_top_l.png" width="27" height="37" /></td>
+      <td colspan="3">
+        <div class="table_tit">系统公告</div>
+      </td>
+      <td width="27"><img src="../static/images/level/note_top_r.png" width="27" height="37" /></td>
+    </tr>
+    <tr>
+      <td width="27" class="table_note_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#fff3e5">
+        <div class="table_note_l">
+          <ul>
+            <li ng-click="choose(notice)" ng-repeat="notice in notices">
+              <a href="javascript:;" lang="note_body01">
+                <span class="sel">{{notice.title}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </td>
+      <td width="2" valign="top" bgcolor="#f9cfb3"></td>
+      <td valign="top" bgcolor="#FFFFFF">
+          <div class="table_note_r">
+            <h1>{{thisNotice.title}}</h1>
+          </div>
+        <div class="table_note_r" id="note_containt">
+          {{thisNotice.content}}
+        </div>
+      </td>
+      <td width="27" class="table_note_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="27" height="11"><img src="../static/images/level/note_bot_l.png" width="27" height="17" /></td>
+      <td height="17" class="table_note_bot_bg">&nbsp;</td>
+      <td width="1" height="17" bgcolor="#f9cfb3"></td>
+      <td height="17" class="table_note_bot_bg1">&nbsp;</td>
+      <td width="27" height="11"><img src="../static/images/level/note_bot_r.png" width="27" height="17" /></td>
+    </tr>
+  </table>
+</div>

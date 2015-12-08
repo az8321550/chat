@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="../static/styles/login.css"/>
+</head>
+<body>
+
+<div class="container re">
+    <form class="login-form active">
+        <div class="form-group clearfix">
+            <label>
+                用户名：
+            </label>
+            <div class="form-control">
+                <span class="username-icon"></span>
+                <input type="text" class="username">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label>
+                验证码：
+            </label>
+            <div class="form-control">
+                <input type="text" class="code-input" maxlength="4">
+            </div>
+            <img src="../static/images/user/code.jpg" class="code">
+        </div>
+        <div class="next-btn"></div>
+        <a href="#" class="forget">忘记密码</a>
+        <a href="#" class="service">在线客服</a>
+    </form>
+    <form class="login-form">
+        <div class="form-group clearfix">
+            <label>
+                用户名：
+            </label>
+            <span class="username-text">meimeimei</span>
+        </div>
+        <div class="form-group clearfix">
+            <label>
+                验证码：
+            </label>
+            <div class="form-control">
+                <span class="password-icon"></span>
+                <input type="password" class="password-input">
+            </div>
+        </div>
+        <div class="login-btn"></div>
+        <a href="#" class="forget">忘记密码</a>
+        <a href="#" class="service">在线客服</a>
+    </form>
+</div>
+<div class="footer">
+    小米平台 Reserved 版权所有&nbsp;&nbsp;小米彩票，为梦想加速！！<br/>
+    法律声明：请务必遵守每个国家或地区的当地法律，本站不能亦不会接受任何人士违犯当地法律所引致之任何责任
+</div>
+
+<script src="/static/plugin/jquery/jquery.js"></script>
+<script>
+    $(".next-btn").click(function(){
+        $(".login-form").eq(1).addClass("active").siblings().removeClass("active")
+    })
+
+    $(".login-btn").click(function(){
+        location.href="/"
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<div class="view">
+    <div class="view-title">
+        <span class="pay-icon"></span>
+        团队中心
+    </div>
+    <div class="view-content pt0 team">
+        <div class="team-con search-con clearfix">
+            <span class="team-text">用户名：</span><input type="text" style="width: 112px;margin-right:18px;">
+            <span class="team-text">账户余额：</span><input type="text"><span class="team-text" style="margin:0 2px;">至</span><input type="text">
+            <span class="team-text" style="margin-left:12px;">排序：</span>
+            <select class="team-select">
+                <option>默认排序</option>
+            </select>
+            <label class="team-ck"><input type="checkbox">从大到小</label>
+            <span class="team-text">返点级别：</span><input type="text"><span class="team-text" style="margin:0 2px;">至</span>
+            <input type="text">
+            <span class="search-btn"></span>
+        </div>
+        <div>
+            <div class="team-name">我的用户：</div>
+            <div class="team-table">
+                <div ng-init="test=[1,2,3,4,5,6,7,8,9,0]"></div>
+                <table class="table">
+                    <tr>
+                        <th>用户名</th>
+                        <th>用户级别</th>
+                        <th>余额</th>
+                        <th>返点级别</th>
+                        <th>注册时间</th>
+                        <th>状态</th>
+                        <th>升点类型</th>
+                        <th>升点时间</th>
+                        <th width="230" class="txt-right">操作</th>
+                        <th>特殊调整</th>
+                    </tr>
+                    <tr ng-repeat="item in test">
+                        <td class="team-user">ADDDbbbbb</td>
+                        <td>一级代理</td>
+                        <td class="team-money">23，230.00</td>
+                        <td>6.7</td>
+                        <td>2014-12-24 12:02:02</td>
+                        <td class="team-status">正常</td>
+                        <td class="center">无</td>
+                        <td class="center">无</td>
+                        <td>返点编辑 奖金详情 帐变 开户额 团队余额</td>
+                        <td class="center">回收 升点</td>
+                    </tr>
+                </table>
+                <div class="clearfix">
+                    <div class="page" style="display: none;"></div>
+                    <div class="page-count">总共 <b>20</b> 页</div>
+                </div>
+                <!--<div ng-init="page_total=5"></div>
+                <div class="page" ng-show="page_total > 0" ng-init="page_index=1">
+                    <ul>
+                        <li>总共{{page_total}}页</li>
+                        <a href="javascript:;" ng-show="page_index>1" ng-click="pre()">
+                            <li>
+                                <div class="li_select">上一页</div>
+                            </li>
+                        </a>
+                        <li ng-show="page_index==1">
+                            <div class="li">上一页</div>
+                        </li>
+                        <a href="javascript:;" ng-show="page_index <page_total" ng-click="next()">
+                            <li>
+                                <div class="li_select">下一页</div>
+                            </li>
+                        </a>
+                        <li ng-show="page_index ==page_total">
+                            <div class="li">下一页</div>
+                        </li>
+                    </ul>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="21"><img src="images/level/pub_tit_01.png" width="21" height="45" /></td>
+      <td height="45" class="Pay_titbg">
+        <div class="Pay_tit">用户管理</div>
+        <div class="Pay_tit_tab">
+          <ul>
+            <li ng-click="add_member=false" class="select">用户列表</li>
+          </ul>
+        </div>
+      </td>
+      <td width="21"><img src="images/level/pub_tit_03.png" width="21" height="45" /></td>
+    </tr>
+  </table>
+  <table ng-show="!add_member&&!rebateSelUser" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="R_con_lie1">
+            <ul>
+              <li>用户名:</li>
+              <li>
+                <input ng-model="qUsername" id="q_username" class="ui-input ui-input-large input_4" type="text" />
+                <span  ng-click="page_index=1;queryTeam()" type="submit" class="ui-button ui-button-lblue" value="试试精确查找">精确查找</span></li>
+              <li> <span ng-click="addMember()" href="javascript:;" class="ui-button ui-button-lblue ui-list-addmember iconfont" title="添加成员">添加成员</span></li>
+            </ul>
+          </div>
+          <div class="line_style01"></div>
+          <div id="path_box">
+            <ol class="breadcrumb font01">
+              <ul class="breadcrumb">
+                <li style="float:left" ng-repeat="path in paths">
+                  <span ng-if="$index>0">>></span>
+                  <a  style="cursor:pointer;" class="ui-button-text" ng-if="$index!=paths.length-1" ng-click="loadData(path)">{{path}}</a>
+                  <span style="color:#1518DB;cursor:default" ng-if="$index===paths.length-1">{{path}}</span>
+                </li>
+              </ul>
+            </ol>
+          </div>
+          <table class="table_s03" width="100%" border="0" align="center" cellpadding="0" cellspacing="1" id="team_table">
+            <thead>
+              <tr>
+                <th>用户名</th>
+                <th>账户等级</th>
+                <th>注册时间</th>
+                <th>最后登录</th>
+                <th>大厅余额</th>
+                <th>彩票余额</th>
+                <th>绑卡状态</th>
+                <th width="300" class="txt-right">操作</th>
+              </tr>
+            </thead>
+            <tbody data-widget-cid="widget-54">
+              <tr class="td-bg-white" ng-repeat="member in members" ng-class="{highlight:member.userName==qUsername}">
+                <td ng-if="member.hasChildrens"><a style="color:#1518DB;cursor:pointer;" ng-click="loadData(member.userName)"><i class="iconfont plus"></i>{{  member.userName}}<i ng-show="member.frozen" class="iconfont locked" title="已锁定"></i></a>
+                </td>
+                <td ng-if="!member.hasChildrens">{{ member.userName}}<i ng-show="member.frozen" class="iconfont locked" title="已锁定"></i>
+                </td>
+                <td>{{member.level}}</td>
+                <td>{{moment(member.registerTime).format('YYYY-MM-DD HH:mm:ss')}}</td>
+                <td>{{(member.miscs.length>0)?member.miscs[0].substring(0,19):'查询中'}}</td>
+                <td>{{member.miscs.length>0?(member.miscs[1]|number:2):'查询中'}}</td>
+                <td>{{member.miscs.length>0?(member.miscs[2]|number:2):'查询中'}}</td>
+                <td>{{member.miscs.length>0?(member.miscs[3]*1>0?'是':'否'):'查询中'}}</td>
+                <td class="txt-right">
+                  <span>
+                  <a  ng-click="quotaSet(member)" class="action" href="javascript:;" title="配额" data-action="quota">配额</a>
+                  <a  ng-click="rebateSel(member)" class="action" href="javascript:;" title="返点" data-action="rebate">返点</a>
+                  <a class="action" href="#/data/asset?username={{member.userName}}" title="账变" data-action="detail">账变</a>
+                  <a ng-click="subUserTeam(member)" class="action" href="javascript:;" title="团队" data-action="team">团队</a>
+                  <a ng-click="showSubRecharge(member)" class="action" href="javascript:;" title="充值" data-action="recharge">充值</a>
+                  &lt;!&ndash; <a ng-click="showDeFreeze(member)" ng-show="member.frozen" class="action" href="javascript:;" title="解冻" data-action="defreeze">解冻</a>
+                  <a ng-click="showFreeze(member)" ng-show="!member.frozen" class="action" href="javascript:;" title="冻结" data-action="freeze">冻结</a> &ndash;&gt;
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="page" ng-show="page_total > 0" ng-init="page_index=1">
+            <ul>
+              <li>总计</li>
+              <li><b>{{result_count}}</b></li>
+              <li>条数据，共</li>
+              <li><b>{{page_total}}</b></li>
+              <li>页，当前第</li>
+              <li><b>{{page_index}}</b></li>
+              <li>页</li>
+              <a href="javascript:;" ng-show="page_index>1" ng-click="pre()">
+                <li>
+                  <div class="li_select">上一页</div>
+                </li>
+              </a>
+              <li ng-show="page_index==1">
+                <div class="li">上一页</div>
+              </li>
+              <a href="javascript:;" ng-show="page_index <page_total" ng-click="next()">
+                <li>
+                  <div class="li_select">下一页</div>
+                </li>
+              </a>
+              <li ng-show="page_index ==page_total">
+                <div class="li">下一页</div>
+              </li>
+              <li>转至</li>
+              <li>
+                <input ng-model="page_index" type="text" name="textfield" id="textfield" class="input_2" />
+              </li>
+              <li>页</li>
+              <li><img ng-click="queryTeam()" src="images/level/go.png" width="28" height="26" /></li>
+            </ul>
+          </div>
+        </div>
+      </td>
+      <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>
+  <table ng-show="add_member" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+      <td width="9"><img src="images/level/tab02_top_l.png" width="9" height="8" /></td>
+      <td class="table_s01_top_bg"></td>
+      <td width="9"><img src="images/level/tab02_top_r.png" width="9" height="8" /></td>
+    </tr>
+    <tr>
+      <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+      <td valign="top" bgcolor="#eeeded">
+        <div class="R_con">
+          <div class="font04"><a ng-click="add_member=false" href="">&lt;返回列表 </a>填写基本信息：</div>
+          <div class="line_style01"></div>
+          <table width="100%" border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+            <tr>
+              <td width="171" height="30" align="right">用户级别：</td>
+              <td valign="middle">
+                <label>
+                  <input ng-init="addMemberType=1" ng-model="addMemberType" name="" type="radio" value="1" /> 直接添加 &nbsp;&nbsp;&nbsp;
+                </label>
+                <label>
+                  <input ng-model="addMemberType" name="" type="radio" value="2" /> 生成注册邀请
+                </label>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==1">
+              <td height="30" align="right">登录帐号：</td>
+              <td>
+                <input value="" ng-model="subUsername" id="sub_userName" name="用户名" data-rule="checkPattern" class="ui-input input_1" required type="text" data-errormessage="6到20位用户名，只能包含字母和数字" />
+                <div class="ui-form-explain"></div>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==1">
+              <td height="30" align="right">登录密码：</td>
+              <td>
+                <input value="" ng-model="subnewpass" id="sub_pwd" name="密码" class="ui-input input_1" required type="password" minlength="6" maxlength="20" />
+              </td>
+            </tr>
+            <tr ng-show="!myQuota&&addMemberType==1">
+              <td height="30" align="right">奖金等级：</td>
+              <td>
+                <select class="input_1" ng-options="literal($index,quota) for quota in quotas track by quota.id" ng-model="selQuota"></select>
+                <div class="ui-form-explain">请选择配额大于0的等级</div>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==1">
+              <td height="30" align="right">
+                <input type="checkbox" ng-model="myQuota"> 低于{{limitQuota?limitQuota.level:selfLevel}}：</td>
+              <td>
+                <input ng-show="myQuota" ng-model="aimQuota" id="aim_quota" name="peie" class="ui-input input_1" type="text" />
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==1&&11==11">
+              <td height="30" align="right">AG真人、PT老虎机返点设置：</td>
+              <td>{{agb1.val}}‰ (您可分配的返点为 {{agb1.max}})</td>
+            </tr>
+            <tr ng-show="addMemberType==1&&11==11">
+              <td height="30" align="right">
+              </td>
+              <td>
+                <div style="width:160px" ui-slider min="{{agb1.min}}" max="{{agb1.max}}" step="1" use-decimals ng-model="agb1.val"></div>
+              </td>
+            </tr>
+
+            <tr ng-show="addMemberType==2">
+              <td></td>
+              <td height="30" align="left">自动注册的奖金允许在1700到 <span>{{selfLevel>1940?1940:selfLevel}}</span> 之间，且是偶数。</td>
+            </tr>
+            <tr ng-show="addMemberType==2">
+              <td height="30" align="right">奖金设置：</td>
+              <td>
+                <input ng-model="point" id="sub_userName" name="用户名" data-rule="checkPattern" class="ui-input input_1" required type="text" data-errormessage="6到20位用户名，只能包含字母和数字" />
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==2">
+              <td height="30" align="right">已有的链接：</td>
+              <td>
+                <p ng-repeat="invite in invites">{{invite.point}}:
+                  <br> <a href="{{prefix}}{{invite.hash}}" target="_blank">{{prefix}}{{invite.hash}}</a><a ng-click="removeLink(invite)" style="cursor:pointer;margin-left:10px;" title="删除" class="iconfont2">删除</a>
+                </p>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==2">
+              <td height="30" align="right">新生成的链接：</td>
+              <td>
+                <p><b ng-show="newInvite">{{prefix}}{{newInvite.hash}}</b>
+                </p>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==1">
+              <td height="30" align="right"></td>
+              <td>
+                <span ng-click="addSubUser()" class="ui-button-lblue ui-button pos">确定</span>
+              </td>
+            </tr>
+            <tr ng-show="addMemberType==2">
+              <td height="30" align="right"></td>
+              <td>
+                <span ng-click="createInvite()" class="ui-button-lblue ui-button pos">生成</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+      <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/level/tab02_bot_l.png" width="9" height="8" /></td>
+      <td class="table_s01_bot_bg"></td>
+      <td width="9"><img src="images/level/tab02_bot_r.png" width="9" height="8" /></td>
+    </tr>
+  </table>-->
+<table ng-show="rebateSelUser" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+    <tr>
+        <td width="9"><img src="../static/images/level/tab02_top_l.png" width="9" height="8"/></td>
+        <td class="table_s01_top_bg"></td>
+        <td width="9"><img src="../static/images/level/tab02_top_r.png" width="9" height="8"/></td>
+    </tr>
+    <tr>
+        <td width="9" class="table_s01_top_l_bg">&nbsp;</td>
+        <td valign="top" bgcolor="#eeeded">
+            <div class="R_con">
+                <div class="font04"><a ng-click="rebateSelUser=false" href="">&lt;返回列表 </a>
+                    {{rebateSelUser.userName}}返点设置：
+                </div>
+                <div class="line_style01"></div>
+                <!-- <div class="R_con_tishi">例如：您自身返点为0.8， 而您在下面 &quot;<span class="font01">保留返点</span>&quot;处选择 0.5，您开设新账户的返点为0.3</div> -->
+                <table width="100%" border="0" align="left" cellpadding="3" cellspacing="0" class="table_s02">
+                    <tr>
+                        <td height="30" align="right">保留返点：</td>
+                        <td>
+                            <span>返点{{(selBrokerage.max-selBrokerage.val)/20|number:1}}%/奖金{{(selBrokerage.val) | number:2}}</span>
+
+                            <div style="width:360px" ui-slider min="{{selBrokerage.min}}" max="{{selBrokerage.max}}"
+                                 step="2" use-decimals ng-model="selBrokerage.val"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30" align="right">&nbsp;</td>
+                        <td>
+                            <a ng-click="rebateSet()" href="javascript:;"><img src="../static/images/level/but03.png" width="148"
+                                                                               height="45"
+                                                                               onmouseover="this.src='images/level/but03_on.png'"
+                                                                               onmouseout="this.src='images/level/but03.png'"/></a>
+                        </td>
+                    </tr>
+                    <tr ng-show="11==11">
+                        <td height="30" align="right">AG、PT返点：</td>
+                        <td>
+                            <span>返点{{agb2.val}}‰</span>
+
+                            <div style="width:360px" ui-slider min="{{agb2.min}}" max="{{agb2.max}}" step="1"
+                                 use-decimals ng-model="agb2.val"></div>
+                        </td>
+                    </tr>
+                    <tr ng-show="11==11">
+                        <td height="30" align="right">&nbsp;</td>
+                        <td>
+                            <a ng-click="agbSet()" href="javascript:;"><img src="../static/images/level/but03.png" width="148"
+                                                                            height="45"
+                                                                            onmouseover="this.src='images/level/but03_on.png'"
+                                                                            onmouseout="this.src='images/level/but03.png'"/></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td width="9" class="table_s01_top_r_bg">&nbsp;</td>
+    </tr>
+    <tr>
+        <td><img src="../static/images/level/tab02_bot_l.png" width="9" height="8"/></td>
+        <td class="table_s01_bot_bg"></td>
+        <td width="9"><img src="../static/images/level/tab02_bot_r.png" width="9" height="8"/></td>
+    </tr>
+</table>
+</div>
+<!-- 团队信息模板 -->
+<div ng-show="show_subteam" tabindex="-1" aria-labelledby="title:1420249926676" aria-describedby="content:1420249926676"
+     class="ui-popup ui-popup-modal ui-popup-show ui-popup-focus" role="alertdialog"
+     style="width:401px;margin-left:-200px;position: fixed; outline: 0px; left: 50%; top: 144px; z-index: 1000;">
+    <div i="dialog" class="ui-dialog">
+        <div class="ui-dialog-arrow-a"></div>
+        <div class="ui-dialog-arrow-b"></div>
+        <table style="width:400px;">
+            <tbody>
+            <tr>
+                <td i="header" class="ui-dialog-header">
+                    <button ng-click="show_subteam=false" i="close" class="ui-dialog-close" title="cancel">×</button>
+                    <div i="title" class="ui-dialog-title" id="title:1420249926676">{{subUser.userName}}的团队信息</div>
+                </td>
+            </tr>
+            <tr>
+                <td i="body" class="ui-dialog-body">
+                    <div i="content" class="ui-dialog-content" id="content:1420249926676">
+                        <form data-widget="validator" class="ui-form">
+                            <div class="ui-form-item">
+                                <label for="" class="ui-label">团队总人数: {{subTeamInfo[2]}}</label>
+                            </div>
+                            <div class="ui-form-item">
+                                <label for="" class="ui-label">大厅余额: {{subTeamInfo[0]}}元</label>
+                            </div>
+                            <div class="ui-form-item">
+                                <label for="" class="ui-label">彩票余额: {{subTeamInfo[1]}}元</label>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td i="footer" class="ui-dialog-footer" style="display: none;">
+                    <div i="statusbar" class="ui-dialog-statusbar" style="display: none;"></div>
+                    <div i="button" class="ui-dialog-button"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /团队信息模板 -->
+<!-- 为下级充值表单 -->
+<div ng-show="show_recharge" tabindex="-1" aria-labelledby="title:1420249926676"
+     aria-describedby="content:1420249926676" class="ui-popup ui-popup-modal ui-popup-show ui-popup-focus"
+     role="alertdialog"
+     style="width:591px;margin-left:-300px;position: fixed; outline: 0px; left: 50%; top: 144px; z-index: 1000;">
+    <div i="dialog" class="ui-dialog">
+        <div class="ui-dialog-arrow-a"></div>
+        <div class="ui-dialog-arrow-b"></div>
+        <table style="width:590px;">
+            <tbody>
+            <tr>
+                <td i="header" class="ui-dialog-header">
+                    <button ng-click="show_recharge=false" i="close" class="ui-dialog-close" title="cancel">×</button>
+                    <div i="title" class="ui-dialog-title" id="title:1420249926676">为下级{{subRechargeUser.userName}}充值
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td i="body" class="ui-dialog-body">
+                    <div i="content" class="ui-dialog-content" id="content:1420249926676">
+                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_s01">
+                            <tr>
+                                <td valign="top">
+                                    <div class="R_con">
+                                        <table style="background-color:#fff;" width="100%" border="0" align="left"
+                                               cellpadding="3" cellspacing="0" class="">
+                                            <tr>
+                                                <td height="30" align="right">金额：</td>
+                                                <td>
+                                                    <input ng-model="recharge.amount" id="sub_recharge_amount" name="金额"
+                                                           class="ui-input input_1" required type="number"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="right">资金密码：</td>
+                                                <td>
+                                                    <input autocomplete="off" ng-model="recharge.paypwd"
+                                                           id="sub_recharge_paypwd" name="资金密码" class="ui-input input_1"
+                                                           required type="password"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="padding:20px 40px 0 0 ;">
+                            <span style="margin-left:80px;" ng-click="subRecharge()"
+                                  class="ui-button-lblue ui-button pos">确定</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td i="footer" class="ui-dialog-footer" style="display: none;">
+                    <div i="statusbar" class="ui-dialog-statusbar" style="display: none;"></div>
+                    <div i="button" class="ui-dialog-button"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /为下级充值表单 -->
+<!-- 配额表单 -->
+<div ng-show="show_quota" tabindex="-1" aria-labelledby="title:1420249926676" aria-describedby="content:1420249926676"
+     class="ui-popup ui-popup-modal ui-popup-show ui-popup-focus" role="alertdialog"
+     style="width:591px;margin-left:-300px;position: fixed; outline: 0px; left: 50%; top: 144px; z-index: 1000;">
+    <div i="dialog" class="ui-dialog">
+        <div class="ui-dialog-arrow-a"></div>
+        <div class="ui-dialog-arrow-b"></div>
+        <table style="width:590px;">
+            <tbody>
+            <tr>
+                <td i="header" class="ui-dialog-header">
+                    <button ng-click="show_quota=false" i="close" class="ui-dialog-close" title="cancel">×</button>
+                    <div i="title" class="ui-dialog-title" id="title:1420249926676">设置{{quotaUser.userName}}的配额</div>
+                </td>
+            </tr>
+            <tr>
+                <td i="body" class="ui-dialog-body">
+                    <div i="content" class="ui-dialog-content" id="content:1420249926676">
+                        <div>
+                            <div id="quota_box">
+                                <table class="ui-table ui-table-noborder">
+                                    <tbody>
+                                    <tr>
+                                        <th>奖金等级</th>
+                                        <th>配额</th>
+                                        <th>本账号配额</th>
+                                    </tr>
+                                    <tr ng-repeat="quota in subQuotas|orderBy:'-level'">
+                                        <td>{{quota.level}}</td>
+                                        <td>
+                                            <span ng-click="quota.amount=(quota.amount>1?quota.amount-1:quota.amount)"
+                                                  class="ui-button ui-button-sblue"> — </span>
+                                            <input ng-model="quota.amount" class="ui-sinput input_1" type="number"/>
+                                            <span ng-hide="{{(quotas|filter:{level:quota.level})[0].amount==0}}"
+                                                  ng-click="quota.amount=quota.amount+1"
+                                                  class="ui-button ui-button-sblue"> +</span>
+                                        </td>
+                                        <td>{{(quotas|filter:{level:quota.level})[0].amount}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="ui-form-item">
+                                    <span ng-click="updateSubQuota()" class="ui-button-lblue ui-button pos">保存</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td i="footer" class="ui-dialog-footer" style="display: none;">
+                    <div i="statusbar" class="ui-dialog-statusbar" style="display: none;"></div>
+                    <div i="button" class="ui-dialog-button"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /配额表单 -->
+<style type="text/css">
+    .ht-60 {
+        height: 60px;
+    }
+
+    .mt-15 {
+        margin-top: 15px;
+    }
+
+    .ori-num {
+        color: #08c;
+        width: 100px;
+        zoom: 1;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+        float: left;
+        cursor: pointer;
+    }
+
+    tr.td-bg-white td {
+        text-align: center;
+        background-color: #FFFFFF;
+    }
+
+    tr.td-bg-white td.td-right {
+        text-align: right;
+    }
+
+    .fn-hide {
+        display: none;
+    }
+
+    .ui-button {
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: inherit;
+        font-weight: bold;
+        border-radius: 2px;
+        padding: 0 20px;
+        background-image: none;
+    }
+
+    .ui-button-lblue:hover,
+    .ui-button-mblue:hover,
+    .ui-button-sblue:hover {
+        background-color: #931515;
+    }
+
+    .ui-button-lblue {
+        line-height: 32px;
+        height: 32px;
+    }
+
+    .ui-button-lblue,
+    .ui-button-mblue,
+    .ui-button-sblue {
+        border: none;
+        color: #fff;
+        /*border: 1px solid #154c67;*/
+
+        background-color: #de1e1f;
+    }
+</style>

@@ -1,0 +1,193 @@
+<link rel="stylesheet" href="/static/styles/mmc.css"/>
+<script src="/static/scripts/mmclott.js"></script>
+<div class="yinni_mmc">
+    <div class="y_mmc_lott">
+        <div ng-show="mmstatus=='lose'" class="wzj_pop" style="display:;"></div>
+        <!--未中奖弹出框-->
+        <div ng-show="mmstatus=='won'" class="djc_pop zjpop" style="display:block;">
+            <div>
+                恭喜您中奖<span>{{mmprize|number:4}}</span>元
+            </div>
+        </div>
+        <!--中奖弹出框-->
+        <div class="y_lot_position">
+            <div class="ymmc_num">
+                <div class="yinmmcnumdiv">
+                    <ul class="ymmc_num_ul">
+                        <li ng-repeat="n in currMMCNO">
+                            <div class="mmcnum_{{n.num}}"></div>
+                        </li>
+                    </ul>
+                    <div class="ymmczzc"></div>
+                </div>
+            </div>
+            <!--ymmc_num end-->
+            <div class="ymmc_his">
+                <ul>
+                    <li ng-repeat="period in recentPeriods|hasNumber|limitTo:5">
+            <span ng-repeat="n in period.showNumbers" class="ymmc_num_{{n.num}}">
+                    </li>
+                </ul>
+            </div>
+            <!--ymmc_his end-->
+            <a href="/his.html?type={{lotto.histype}}&game={{lotto.label}}&length=30" target="_blank"
+               class="mmc_morerec">更多记录</a>
+            <ul class="handle_hand" ng-click="purchaseConfirm(2)">
+                <li class="hand_up"></li>
+                <li class="hand_down" style="display:none;"></li>
+            </ul>
+        </div>
+        <!--y_lot_position end-->
+        <div class="zzc_kaijiang"></div>
+    </div>
+    <!--y_mmc_lott end-->
+    <div class="mmclott_mid">
+        <div class="mmcwf_div">
+            <ul>
+                <li ng-repeat="tab in lotto.tabs" ng-click="setCurrentTab(tab)">
+                    <a ng-class="{'current':tab==currentTab }" href="javascript:;">{{tab.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <!--mmcwf_div end-->
+        <div class="zxzx_div">
+            <ul>
+                <li>
+                    <dl ng-repeat="group in currentTab.methodgroups">
+                        <dt>{{group.name}}：</dt>
+                        <dd ng-click="setCurrentMethod(group,method)" ng-class="{'current':method == currentMethod}"
+                            ng-repeat="method in group.methods">{{method.name}}
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <div class="mmc_example">
+                <span>{{currentMethod.tip}}</span>
+            </div>
+        </div>
+        <!--zxzx_div end-->
+        <div ng-if="currentMethod.positions" class="positions">
+            <div class="k">
+            </div>
+            <label ng-repeat="position in currentMethod.positions">
+                <input ng-change="checkSelectingLegal()" ng-model="position.checked" ng-checked="position.checked"
+                       type="checkbox"/>{{position.name}}
+            </label>
+        </div>
+        <div ng-show="currentMethod.spec==='luru'" class="mmc_danshi" style="display:;">
+            <div class="qingkong_text"><a ng-click="cleanLuru()" href="javascript:;">清空文本框</a></div>
+            <div class="">
+                <textarea ng-model="luru.text"></textarea>
+                <br/>
+                <span>每一注号码之间的间隔符支持 回车 逗号[,] 分号[;]  每注内间隔使用空格即可。</span>
+            </div>
+        </div>
+        <!--mmc_danshi end-->
+        <div ng-show="currentMethod.spec!=='luru'" class="mmc_xhq">
+            <ul class="ball-section">
+                <li ng-repeat="row in currentMethod.rows" class="ball-set-li">
+                    <div class="ball_title">{{row.name}}</div>
+                    <div class="ball-content" ng-class="{'zxhezhi_div':row.nums.length>16}">
+                        <ul>
+                            <li ng-repeat="num in row.nums"><a
+                                    ng-class="{'current':num.selected,box:currentMethod.spec==='box'}"
+                                    ng-click="selectNum($parent.$index,row,num)" href="javascript:;">{{num.value}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--ball-content end-->
+                    <div ng-show="currentMethod.spec=='number'&&currentMethod.widget" class="ball-control">
+                        <a ng-click="selectAllNumbers($index,row)" href="javascript:void(0)">全</a>
+                        <a ng-click="selectBigNumbers(row)" href="javascript:void(0)">大</a>
+                        <a ng-click="selectSmallNumbers(row)" href="javascript:void(0)">小</a>
+                        <a ng-click="selectOddNumbers(row)" href="javascript:void(0)">奇</a>
+                        <a ng-click="selectEvenNumbers(row)" href="javascript:void(0)">偶</a>
+                        <a ng-click="clearSelNumbers(row)" href="javascript:void(0)">清</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--mmc_xhq end-->
+        <div class="bet-statistics">
+            <div class="betchosen">您选择<span>{{getQty()}}</span>注</div>
+            <div class="bet_beis">
+                <span ng-click="currMultiple=(currMultiple<2?1:currMultiple*1-1)" class="beis_jian"></span>
+                <input ng-model="currMultiple" ng-keyup="checkCurrMultiple($event)" type="text" maxlength="4"
+                       class="mmcbeis"/><span ng-click="currMultiple=(currMultiple>65534?65535:currMultiple*1+1)"
+                                              class="beis_jia"></span><span>倍</span>
+            </div>
+            <div class="bet_moshi">
+                <a ng-click="currRate=yuan" ng-class="{current:currRate==yuan}" href="javascript:;">元</a><a
+                    ng-click="currRate=jiao" ng-class="{current:currRate==jiao}" href="javascript:;">角</a><a
+                    ng-click="currRate=fen" ng-class="{current:currRate==fen}" href="javascript:;">分</a>
+            </div>
+            <div class="bet_total">共 <span>{{selectingQty*2*currRate.value*currMultiple |number:2}}</span> 元</div>
+            <input ng-click="addTicket()" ng-disabled="!selectingCanBuy" type="button" value="" class="bet_addnum"/>
+        </div>
+        <!--bet-statistics end-->
+    </div>
+    <!--mmclott_mid end-->
+    <div class="mmclott_bot">
+        <div class="panel-section">
+            <div class="setion_table">
+                <div class="setion_table_con">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr ng-repeat="ticket in tickets">
+                            <td>{{ticket.comboName}}</td>
+                            <td><span class="ori-num"
+                                      style="width:500px;"> {{ticket.spec?ticket.literal:ticket.number}}</span></td>
+                            <td><span class="sec_zt_1">[{{ticket.quantity}}注|{{ticket.mode}}模式|{{ticket.multiple}}倍|{{ticket.money|number:2}}元]</span>
+                            </td>
+                            <td><span ng-click="removeTicket($index)" style="cursor:pointer;">X</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--setion_table end-->
+            <div class="mmclxk_div">
+                <div class="mmclxk_2">您选择了<span>{{sumQty()}}</span>注 金额<span>{{sumMny()|number:2}}</span>元</div>
+            </div>
+            <div class="lott_sub_bt">
+                <input ng-click="purchaseConfirm(2)" type="button" value="" class="inputlott_bt1">
+
+                <div style="display:none;" class="inputlottdiv">
+                    <input ng-click="purchaseConfirm(2)" type="button" value="" class="inputlott_bt2">
+                    <input ng-click="removeTickets()" type="button" value="" class="inputlott_bt3">
+                </div>
+            </div>
+        </div>
+        <!--panel-section end-->
+        <div class="lottery-history">
+            <div class="lott_his_top">游戏记录</div>
+            <div class="lott_his_mid">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th>投注时间</th>
+                        <th>玩法</th>
+                        <th>投注内容</th>
+                        <th>投注金额</th>
+                        <th>奖金</th>
+                        <th>开奖号码</th>
+                        <th>状态</th>
+                    </tr>
+                    <tr ng-repeat="r in results|orderBy:['-orderTime','-period']|limitTo:10">
+                        <td>{{moment(r.orderTime).format('YYYY-MM-DD H:mm:ss')}}</td>
+                        <td>{{vocabulary.name(r.method)}}</td>
+                        <td><span class="ori-num" title="{{r.originalNumbers}}">{{r.originalNumbers}}</span></td>
+                        <td>{{r.amount|number:2}}</td>
+                        <td>{{r.prize|number:2}}</td>
+                        <td>{{r.numbers}}</td>
+                        <td><span ng-class="{'sec_zt_1':r.won,'sec_zt_2':!r.won}">{{r.won?'已中奖':vocabulary.name(r.status)}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--lott_his_mid end-->
+            <div class="lottery-footer">
+                <a href="javascript:void(0)" class="sqzk_1"></a>
+            </div>
+        </div>
+        <!--lottery-history end-->
+    </div>
+    <!--mmclott_bot end-->
+</div>
