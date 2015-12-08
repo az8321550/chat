@@ -59,10 +59,17 @@ function flashNew(){
     window["flashTimeNew"] = setInterval(function(){
         $("#chat-new").find("i").toggle()
     },500)
+    if($("#layim_min").is(":visible")){
+        window["flashTimeMinNew"] = setInterval(function(){
+            $("#layim_min").toggle()
+        },500)
+    }
 }
 function flashNewCancel(){
     $("#chat-new").find("i").show()
+    $("#layim_min").hide()
     clearInterval(window["flashTimeNew"]);
+    clearInterval(window["flashTimeMinNew"]);
 }
 function cancleFlash(ele){
     if(ele.data("time")){
@@ -78,11 +85,13 @@ $(document).on("click",".layim_chatlist li",function(){
     }
 })
 
-$(document).on("click","#chat-new",function(){
-    flashNewCancel()
-    var id="az8321550"
-    $(".xxim_childnode[data-id="+id+"]").trigger("click");
-    chat.write(id)
+$(document).on("click","#chat-new,#layim_min",function(){
+    if(chat.messageList.length){
+        var id=chat.messageList[0].id
+        $(".xxim_childnode[data-id="+id+"]").trigger("click");
+        chat.write(id)
+        flashNewCancel()
+    }
 })
 
 
@@ -101,4 +110,8 @@ socket.on('message', function (data) {
 });
 
 
+socket.on('left', function (data) {
+    //下线了
+    console.log(data)
+});
 
