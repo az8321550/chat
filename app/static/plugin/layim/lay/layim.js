@@ -16,7 +16,7 @@ var config = {
     right: -232,
     api: {
         friend: '/chat/friends', //好友列表接口
-        group: 'group.json', //群组列表接口 
+        group: 'group.json', //群组列表接口
         chatlog: 'chatlog.json', //聊天记录接口
         groups: 'groups.json', //群组成员接口
         sendurl: '' //发送消息接口
