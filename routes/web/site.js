@@ -13,20 +13,70 @@ module.exports = function (app) {
         res.render('index', app.locals.middle);
     });
 
-    app.get('/login', function (req, res) {
-        res.render('login', app.locals.middle);
+    app.get('/chat', function (req, res) {
+        res.render('chat', app.locals.middle);
     });
 
-    app.get('/forbid', function (req, res) {
-        res.render('forbid', app.locals.middle);
-    });
 
-    app.get('/his3.html', function (req, res) {
-        res.render('his3', app.locals.middle);
-    });
-
-    app.get('/signout', function (req, res) {
-        req.session.username = '';
-        res.redirect('/login');
+    app.post('/chat/friends', function (req, res) {
+        if(req.body.username=="az8321550"){
+            res.json({
+                "status": 1,
+                "msg": "ok",
+                "data": [
+                    {
+                        "name": "上级用户",
+                        "nums": 1,
+                        "item": [
+                            {
+                                "id": "fadacai",
+                                "name": "sb",
+                                "online":false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "下级用户",
+                        "nums": 1,
+                        "item": [
+                            {
+                                "id": "下级1",
+                                "name": "下级",
+                                "online":true
+                            }
+                        ]
+                    },
+                ]
+            })
+        }else{
+            res.json({
+                "status": 1,
+                "msg": "ok",
+                "data": [
+                    {
+                        "name": "上级用户",
+                        "nums": 1,
+                        "item": [
+                            {
+                                "id": "fadacai",
+                                "name": "sb",
+                                "online":false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "下级用户",
+                        "nums": 1,
+                        "item": [
+                            {
+                                "id": "az8321550",
+                                "name": "nobody",
+                                "online":false
+                            }
+                        ]
+                    },
+                ]
+            })
+        }
     });
 };

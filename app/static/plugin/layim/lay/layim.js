@@ -1,7 +1,7 @@
 /*
 
  @Name: layui WebIM 1.0.0
- @Author：贤心
+ @Author：nobody
  @Date: 2014-04-25
  @Blog: http://sentsin.com
  
@@ -22,7 +22,8 @@ var config = {
         sendurl: '' //发送消息接口
     },
     user: { //当前用户信息
-        name: 'nono',
+        name: chat.username,
+        nick: chat.nick,
         face: '/static/images/avatar.jpg'
     },
     
@@ -229,8 +230,8 @@ xxim.popchat = function(param){
             +'    </div>'
             +'    <div class="layim_tool">'
             +'        <i class="layim_addface" title="发送表情"></i>'
-            +'        <a href="javascript:;"><i class="layim_addimage" title="上传图片"></i></a>'
-            +'        <a href="javascript:;"><i class="layim_addfile" title="上传附件"></i></a>'
+            +'        <a class="layim_emoji_con"></a>'
+            +'        <a id="layim_file" href="javascript:;"><i class="layim_addimage" title="上传图片"></i></a>'
             +'        <a href="" target="_blank" class="layim_seechatlog"><i></i>聊天记录</a>'
             +'    </div>'
             +'    <textarea class="layim_write" id="layim_write"></textarea>'
@@ -242,7 +243,8 @@ xxim.popchat = function(param){
             +'        </div>'
             +'    </div>'
             +'</div>'
-            +'</div>';
+            +'</div>'
+            +'<input type="file" id="layim_file_up" />';
 
     if(config.chatings < 1){
         $.layer({
@@ -408,6 +410,7 @@ xxim.transmit = function(){
         var data = {
             content: node.imwrite.val(),
             id: xxim.nowchat.id,
+            from: chat.username,
             _: +new Date
         };
 
@@ -559,29 +562,29 @@ xxim.getDates = function(index){
     var api = [config.api.friend, config.api.group, config.api.chatlog],
         node = xxim.node, myf = node.list.eq(index);
     myf.addClass('loading');
-    config.json(api[index], {}, function(datas){
+    config.json(api[index], {
+        username:chat.username
+    }, function(datas){
         if(datas.status === 1){
             var i = 0, myflen = datas.data.length, str = '', item;
 
-            chat.list=datas.data;
+            var tempArr=[]
+            for(var j=0;j<datas.data.length;j++){
+                for(var k=0;k<datas.data[j].item.length;k++) {
+                    tempArr.push(datas.data[j].item[k]);
+                }
+            }
+            chat.friends=tempArr;
 
             if(myflen > 1){
-                if(index !== 2){
-                    for(; i < myflen; i++){
-                        str += '<li data-id="'+ datas.data[i].id +'" class="xxim_parentnode">'
-                            +'<h5><i></i><span class="xxim_parentname">'+ datas.data[i].name +'</span><em class="xxim_nums">（'+ datas.data[i].nums +'）</em></h5>'
-                            +'<ul class="xxim_chatlist">';
-                        item = datas.data[i].item;
-                        for(var j = 0; j < item.length; j++){
-                            str += '<li data-id="'+ item[j].id +'" class="xxim_childnode" type="'+ (index === 0 ? 'one' : 'group') +'"><img src="/static/images/avatar.jpg" class="xxim_oneface"><span class="xxim_onename">'+ item[j].name +'</span></li>';
-                        }
-                        str += '</ul></li>';
-                    }
-                } else {
-                    str += '<li class="xxim_liston">'
+                str +='<li data-id="online" class="xxim_parentnode"><h5><span class="xxim_parentname">联系客服</span></h5></li>'
+                for(; i < myflen; i++){
+                    str += '<li data-id="'+ datas.data[i].id +'" class="xxim_parentnode">'
+                        +'<h5><i></i><span class="xxim_parentname">'+ datas.data[i].name +'</span><em class="xxim_nums">（'+ datas.data[i].nums +'）</em></h5>'
                         +'<ul class="xxim_chatlist">';
-                    for(; i < myflen; i++){
-                        str += '<li data-id="'+ datas.data[i].id +'" class="xxim_childnode" type="one"><img src="'+ datas.data[i].face +'"  class="xxim_oneface"><span  class="xxim_onename">'+ datas.data[i].name +'</span><em class="xxim_time">'+ datas.data[i].time +'</em></li>'; 
+                    item = datas.data[i].item;
+                    for(var j = 0; j < item.length; j++){
+                        str += '<li data-id="'+ item[j].id +'" class="xxim_childnode" type="'+ (index === 0 ? 'one' : 'group') +'"><i data-id="'+item[j].id+'" class="xxim_online_i'+(item[j].online?" active":"")+'"></i><img src="/static/images/avatar.jpg" class="xxim_oneface"><span class="xxim_onename" title="'+ item[j].id +'（'+ item[j].name +'）">'+ item[j].id +'（'+ item[j].name +'）</span></li>';
                     }
                     str += '</ul></li>';
                 }
@@ -604,7 +607,7 @@ xxim.view = (function(){
     var xximNode = xxim.layimNode = $('<div id="xximmm" class="xxim_main">'
             +'<div class="xxim_top" id="xxim_top">'
             +'  <div class="xxim_search"><i></i><input id="xxim_searchkey" /><span id="xxim_closesearch">×</span></div>'
-            +'  <div class="xxim_tabs" id="xxim_tabs"><span class="xxim_tabfriend" title="好友"><i></i></span><span class="xxim_tabgroup" title="群组"><i></i></span><span class="xxim_latechat"  title="最近聊天"><i></i></span></div>'
+            +'  <div class="xxim_tabs" id="xxim_tabs"><span class="xxim_tabfriend" title="好友"><i></i></span></div>'
             +'  <ul class="xxim_list" style="display:block"></ul>'
             +'  <ul class="xxim_list"></ul>'
             +'  <ul class="xxim_list"></ul>'

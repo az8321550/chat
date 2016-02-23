@@ -2,7 +2,6 @@ module.exports = function (app) {
 
     require('./web/site')(app);
     require('./web/interface')(app);
-    require('./web/chat')(app);
 
 
     // catch 404 and forward to error handler

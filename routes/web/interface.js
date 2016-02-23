@@ -26,21 +26,8 @@ module.exports = function (app) {
             res.render('index', app.locals.middle);
         });
 
-        app.get('/login', function (req, res) {
-            res.render('login', app.locals.middle);
-        });
-
-        app.get('/forbid', function (req, res) {
-            res.render('forbid', app.locals.middle);
-        });
-
-        app.get('/his3.html', function (req, res) {
-            res.render('his3', app.locals.middle);
-        });
-
-        app.get('/signout', function (req, res) {
-            req.session.username = '';
-            res.redirect('/login');
+        app.get('/chat', function (req, res) {
+            res.render('chat', app.locals.middle);
         });
     };
 

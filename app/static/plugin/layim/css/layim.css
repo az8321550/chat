@@ -50,7 +50,7 @@ li{list-style:none;}
 .xxim_chatlist li{position:relative; height:30px; line-height:30px; padding:5px 10px; font-size:0; cursor:pointer;}
 .xxim_chatlist li:hover{background-color:#F2F4F8}
 .xxim_chatlist li *{display:inline-block; *display:inline; *zoom:1; vertical-align:top; font-size:12px;}
-.xxim_chatlist li span{padding-left:10px; max-width:120px;  overflow:hidden; text-overflow: ellipsis; white-space:nowrap;}
+.xxim_chatlist li span{padding-left:10px; width:170px;  overflow:hidden; text-overflow: ellipsis; white-space:nowrap;}
 .xxim_chatlist li img{width:30px; height:30px;}
 .xxim_chatlist li .xxim_time{position:absolute; right:10px; color:#999;}
 .xxim_list .xxim_errormsg{text-align:center; margin:50px 0; color:#999;}
@@ -149,8 +149,21 @@ li{list-style:none;}
 
 
 
-
-
+#layim_file_up{
+ display: none;
+}
+i.xxim_online_i{
+ width: 15px;
+ height: 15px;
+ background: #AFA7A7;
+ border-radius: 50%;
+ position: absolute;
+ left: 27px;
+ top: 23px;
+}
+.xxim_online_i.active{
+ background: green;
+}
 
 
 

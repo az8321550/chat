@@ -1,14 +1,11 @@
-var socket = io()
-var chat={
-    list:[],
+chat= $.extend(chat,{
+    friends:[],
     messageList:[],
-    id:"az8321550",
-    username:"nobody",
     write:function(id){
         var temp=chat.messageList.slice(0);
         chat.messageList.length=0;
         for(var i=0;i<temp.length;i++){
-            if(temp[i].id==id){
+            if(temp[i].from==id){
                 writeChat(temp[i].content);
             }else{
                 chat.messageList.push(temp[i]);
@@ -16,22 +13,26 @@ var chat={
         }
     },
     isFriend:function(id){
-        for(var i=0;i<chat.list.length;i++){
-            if(chat.list[i].id==id){
+        console.log(chat.friends)
+        for(var i=0;i<chat.friends.length;i++){
+            if(chat.friends[i].id==id){
                 return true;
             }
         }
         return false;
     },
     online:function(data){
-        if(this.isFriend(data.id)){
-            alert("你的好友"+data.username+"上线了")
-        }
+        $(".xxim_online_i[data-id="+data.username+"]").addClass("active")
+
+    },
+    offline:function(data){
+        $(".xxim_online_i[data-id="+data+"]").removeClass("active")
+
     },
     message:function(data){
 
         if($("#xubox_layer1").is(":visible")){
-            if($(".layim_chatlist li[data-id="+data.id+"]").hasClass("layim_chatnow")){
+            if($(".layim_chatlist li[data-id="+data.from+"]").hasClass("layim_chatnow")){
                 writeChat(data.content);
             }else{
                 this.messageList.push(data)
@@ -43,7 +44,9 @@ var chat={
         }
 
     }
-}
+})
+
+var socket = io()
 
 flashIndex=0;
 function flash(id){
@@ -87,11 +90,21 @@ $(document).on("click",".layim_chatlist li",function(){
 
 $(document).on("click","#chat-new,#layim_min",function(){
     if(chat.messageList.length){
-        var id=chat.messageList[0].id
+        var id=chat.messageList[0].from;
         $(".xxim_childnode[data-id="+id+"]").trigger("click");
         chat.write(id)
         flashNewCancel()
     }
+})
+
+//表情
+$(document).on("click",".layim_addface",function(){
+
+})
+
+//图片
+$(document).on("click","#layim_file",function(){
+    $("#layim_file_up").click()
 })
 
 
@@ -101,17 +114,22 @@ socket.emit('online', {
 });
 
 socket.on('online', function (data) {
-    chat.online(data)
+    if(chat.isFriend(data.username)){
+        chat.online(data)
+    }
 });
 
 
 socket.on('message', function (data) {
-    chat.message(data)
+    if(data.id==chat.username){
+        chat.message(data)
+    }
 });
 
 
-socket.on('left', function (data) {
-    //下线了
-    console.log(data)
+socket.on('offline', function (data) {
+    if(chat.isFriend(data)){
+        chat.offline(data)
+    }
 });
 

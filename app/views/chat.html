@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <title>聊天系统</title>
+    <link rel="stylesheet" href="/static/plugin/layim/css/layim.css"/>
+</head>
+
+<body>
+
+
+
+
+<script>
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+
+    var chat={};
+
+    chat.username=getQueryString("id");
+    if(chat.username=="az8321550"){
+        chat.nick="nobody"
+    }
+    if(chat.username=="fadacai"){
+        chat.nick="sb"
+    }
+
+</script>
+<script src="/static/plugin/socket.io/socket.io.js"></script>
+<script src="/static/plugin/jquery/jquery.js"></script>
+<script src="/static/plugin/layim/lay/layim.js"></script>
+<script src="/static/scripts/chat.js"></script>
+<script src="/static/plugin/layim/lay/layer/layer.min.js"></script>
+</body>
+
+</html>
