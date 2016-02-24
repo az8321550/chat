@@ -12,7 +12,8 @@
 <label>请选择用户:</label>
 <button type="button" id="ok1">az8321550</button>
 <button type="button" id="ok2">fadacai</button>
-
+<button type="button" id="ok3">test1</button>
+<div class="emoji-con"></div>
 
 
     <script src="/static/plugin/jquery/jquery.js"></script>
@@ -24,6 +25,18 @@
         $("#ok2").click(function(){
             location.href="/chat?id=fadacai";
         })
+
+        $("#ok3").click(function(){
+            location.href="/chat?id=test1";
+        })
+
+
+        var html=[];
+        for(var i=1;i<51;i++){
+            html.push("<div class='emoji-one'><img src='/static/images/emoji/"+i+".gif' data-value='[表情"+i+"]'></div>")
+        }
+
+        $(".emoji-con").html(html.join(""));
     </script>
 </body>
 

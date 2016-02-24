@@ -99,8 +99,53 @@ $(document).on("click","#chat-new,#layim_min",function(){
 
 //表情
 $(document).on("click",".layim_addface",function(){
-
+    if($(".emoji-con.active").length){
+        hideEmoji()
+    }else{
+        $(this).next().addClass("active");
+    }
 })
+
+function hideEmoji(){
+    $(".emoji-con.active").removeClass("active");
+}
+
+//添加表情
+$(document).on("click",".emoji-one",function(){
+    var textarea=$("#layim_write");
+    hideEmoji()
+    insertText(textarea[0],$(this).find("img").data("value"))
+    moveEnd(textarea[0])
+})
+
+function insertText(obj,str) {
+    if (document.selection) {
+        var sel = document.selection.createRange();
+        sel.text = str;
+    } else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+        var startPos = obj.selectionStart,
+            endPos = obj.selectionEnd,
+            cursorPos = startPos,
+            tmpStr = obj.value;
+        obj.value = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length);
+        cursorPos += str.length;
+        obj.selectionStart = obj.selectionEnd = cursorPos;
+    } else {
+        obj.value += str;
+    }
+}
+function moveEnd(obj){
+    obj.focus();
+    var len = obj.value.length;
+    if (document.selection) {
+        var sel = obj.createTextRange();
+        sel.moveStart('character',len);
+        sel.collapse();
+        sel.select();
+    } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+        obj.selectionStart = obj.selectionEnd = len;
+    }
+}
 
 //图片
 $(document).on("click","#layim_file",function(){

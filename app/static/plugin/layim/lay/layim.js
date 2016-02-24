@@ -87,7 +87,7 @@ xxim.expend = function(){
                 localStorage.layimState = 1;
             }catch(e){}
             xxim.layimNode.attr({state: 1});
-            node.layimFooter.addClass('xxim_expend').stop().animate({marginLeft: config.right}, config.aniTime/2);
+            //node.layimFooter.addClass('xxim_expend').stop().animate({marginLeft: config.right}, config.aniTime/2);
             node.xximHide.addClass('xxim_show');
         });
     } else {
@@ -230,9 +230,10 @@ xxim.popchat = function(param){
             +'    </div>'
             +'    <div class="layim_tool">'
             +'        <i class="layim_addface" title="发送表情"></i>'
+            +'        <div class="emoji-con"><div class="emoji-one"><img src="/static/images/emoji/1.gif" data-value="[表情1]"></div><div class="emoji-one"><img src="/static/images/emoji/2.gif" data-value="[表情2]"></div><div class="emoji-one"><img src="/static/images/emoji/3.gif" data-value="[表情3]"></div><div class="emoji-one"><img src="/static/images/emoji/4.gif" data-value="[表情4]"></div><div class="emoji-one"><img src="/static/images/emoji/5.gif" data-value="[表情5]"></div><div class="emoji-one"><img src="/static/images/emoji/6.gif" data-value="[表情6]"></div><div class="emoji-one"><img src="/static/images/emoji/7.gif" data-value="[表情7]"></div><div class="emoji-one"><img src="/static/images/emoji/8.gif" data-value="[表情8]"></div><div class="emoji-one"><img src="/static/images/emoji/9.gif" data-value="[表情9]"></div><div class="emoji-one"><img src="/static/images/emoji/10.gif" data-value="[表情10]"></div><div class="emoji-one"><img src="/static/images/emoji/11.gif" data-value="[表情11]"></div><div class="emoji-one"><img src="/static/images/emoji/12.gif" data-value="[表情12]"></div><div class="emoji-one"><img src="/static/images/emoji/13.gif" data-value="[表情13]"></div><div class="emoji-one"><img src="/static/images/emoji/14.gif" data-value="[表情14]"></div><div class="emoji-one"><img src="/static/images/emoji/15.gif" data-value="[表情15]"></div><div class="emoji-one"><img src="/static/images/emoji/16.gif" data-value="[表情16]"></div><div class="emoji-one"><img src="/static/images/emoji/17.gif" data-value="[表情17]"></div><div class="emoji-one"><img src="/static/images/emoji/18.gif" data-value="[表情18]"></div><div class="emoji-one"><img src="/static/images/emoji/19.gif" data-value="[表情19]"></div><div class="emoji-one"><img src="/static/images/emoji/20.gif" data-value="[表情20]"></div><div class="emoji-one"><img src="/static/images/emoji/21.gif" data-value="[表情21]"></div><div class="emoji-one"><img src="/static/images/emoji/22.gif" data-value="[表情22]"></div><div class="emoji-one"><img src="/static/images/emoji/23.gif" data-value="[表情23]"></div><div class="emoji-one"><img src="/static/images/emoji/24.gif" data-value="[表情24]"></div><div class="emoji-one"><img src="/static/images/emoji/25.gif" data-value="[表情25]"></div><div class="emoji-one"><img src="/static/images/emoji/26.gif" data-value="[表情26]"></div><div class="emoji-one"><img src="/static/images/emoji/27.gif" data-value="[表情27]"></div><div class="emoji-one"><img src="/static/images/emoji/28.gif" data-value="[表情28]"></div><div class="emoji-one"><img src="/static/images/emoji/29.gif" data-value="[表情29]"></div><div class="emoji-one"><img src="/static/images/emoji/30.gif" data-value="[表情30]"></div><div class="emoji-one"><img src="/static/images/emoji/31.gif" data-value="[表情31]"></div><div class="emoji-one"><img src="/static/images/emoji/32.gif" data-value="[表情32]"></div><div class="emoji-one"><img src="/static/images/emoji/33.gif" data-value="[表情33]"></div><div class="emoji-one"><img src="/static/images/emoji/34.gif" data-value="[表情34]"></div><div class="emoji-one"><img src="/static/images/emoji/35.gif" data-value="[表情35]"></div><div class="emoji-one"><img src="/static/images/emoji/36.gif" data-value="[表情36]"></div><div class="emoji-one"><img src="/static/images/emoji/37.gif" data-value="[表情37]"></div><div class="emoji-one"><img src="/static/images/emoji/38.gif" data-value="[表情38]"></div><div class="emoji-one"><img src="/static/images/emoji/39.gif" data-value="[表情39]"></div><div class="emoji-one"><img src="/static/images/emoji/40.gif" data-value="[表情40]"></div><div class="emoji-one"><img src="/static/images/emoji/41.gif" data-value="[表情41]"></div><div class="emoji-one"><img src="/static/images/emoji/42.gif" data-value="[表情42]"></div><div class="emoji-one"><img src="/static/images/emoji/43.gif" data-value="[表情43]"></div><div class="emoji-one"><img src="/static/images/emoji/44.gif" data-value="[表情44]"></div><div class="emoji-one"><img src="/static/images/emoji/45.gif" data-value="[表情45]"></div><div class="emoji-one"><img src="/static/images/emoji/46.gif" data-value="[表情46]"></div><div class="emoji-one"><img src="/static/images/emoji/47.gif" data-value="[表情47]"></div><div class="emoji-one"><img src="/static/images/emoji/48.gif" data-value="[表情48]"></div><div class="emoji-one"><img src="/static/images/emoji/49.gif" data-value="[表情49]"></div><div class="emoji-one"><img src="/static/images/emoji/50.gif" data-value="[表情50]"></div></div>'
             +'        <a class="layim_emoji_con"></a>'
             +'        <a id="layim_file" href="javascript:;"><i class="layim_addimage" title="上传图片"></i></a>'
-            +'        <a href="" target="_blank" class="layim_seechatlog"><i></i>聊天记录</a>'
+            +'        <a href="javascript:;" target="_blank" class="layim_seechatlog"><i></i>聊天记录</a>'
             +'    </div>'
             +'    <textarea class="layim_write" id="layim_write"></textarea>'
             +'    <div class="layim_send">'
@@ -303,8 +304,6 @@ xxim.tabchat = function(param){
     xxim.chatbox.find('.layim_face>img').attr('src', param.face);
     xxim.chatbox.find('.layim_face, .layim_names').attr('href', param.href);
     xxim.chatbox.find('.layim_names').text(param.name);
-    
-    xxim.chatbox.find('.layim_seechatlog').attr('href', config.chatlogurl + param.id);
    
     log.groups = xxim.chatbox.find('.layim_groups');
     if(param.type === 'group'){
@@ -372,6 +371,7 @@ xxim.getGroups = function(param){
         var keys = xxim.nowchat.type + xxim.nowchat.id;
         var log={}
         log.html = function(param, type){
+            param.content=replaceEmoji(param.content)
             return '<li class="'+ (type === 'me' ? 'layim_chateme' : '') +'">'
                 +'<div class="layim_chatuser">'
                 + function(){
@@ -427,6 +427,7 @@ xxim.transmit = function(){
             
             //聊天模版
             log.html = function(param, type){
+                param.content=replaceEmoji(param.content)
                 return '<li class="'+ (type === 'me' ? 'layim_chateme' : '') +'">'
                     +'<div class="layim_chatuser">'
                         + function(){
@@ -472,6 +473,10 @@ xxim.transmit = function(){
         }
     });
 };
+
+function replaceEmoji(text){
+    return text.replace(/\[表情(\d{1,2})\]/g,"<img class='chat-emoji' src='/static/images/emoji/$1.gif'>")
+}
 
 //事件
 xxim.event = function(){
@@ -524,7 +529,8 @@ xxim.event = function(){
             node.searchMian.show();
             node.closeSearch.show();
             //此处的搜索ajax参考xxim.getDates
-            node.list.eq(3).html('<li class="xxim_errormsg">没有符合条件的结果</li>');
+            //node.list.eq(3).html('<li class="xxim_errormsg">没有符合条件的结果</li>');
+            node.list.eq(3).html('<li data-id="fadacai" class="xxim_childnode" type="one"><i data-id="fadacai" class="xxim_online_i"></i><img src="/static/images/avatar.jpg" class="xxim_oneface"><span class="xxim_onename" title="fadacai（sb）">fadacai（sb）</span></li>');
         } else {
             node.searchMian.hide();
             node.closeSearch.hide();
@@ -577,7 +583,7 @@ xxim.getDates = function(index){
             chat.friends=tempArr;
 
             if(myflen > 1){
-                str +='<li data-id="online" class="xxim_parentnode"><h5><span class="xxim_parentname">联系客服</span></h5></li>'
+                str +='<li data-id="online" class="xxim_parentnode"><h5><span class="xxim_parentname">联系客服</span></h5><ul class="xxim_chatlist" style="display: none;"><li data-id="service" class="xxim_childnode" type="one"><i data-id="service" class="xxim_online_i"></i><img src="/static/images/avatar.jpg" class="xxim_oneface"><span class="xxim_onename" title="客服">客服</span></li></ul></li>'
                 for(; i < myflen; i++){
                     str += '<li data-id="'+ datas.data[i].id +'" class="xxim_parentnode">'
                         +'<h5><i></i><span class="xxim_parentname">'+ datas.data[i].name +'</span><em class="xxim_nums">（'+ datas.data[i].nums +'）</em></h5>'
@@ -611,7 +617,7 @@ xxim.view = (function(){
             +'  <ul class="xxim_list" style="display:block"></ul>'
             +'  <ul class="xxim_list"></ul>'
             +'  <ul class="xxim_list"></ul>'
-            +'  <ul class="xxim_list xxim_searchmain" id="xxim_searchmain"></ul>'
+            +'  <ul class="xxim_list xxim_searchmain xxim_chatlist" id="xxim_searchmain"></ul>'
             +'</div>'
             +'<ul class="xxim_bottom" id="xxim_bottom">'
             +'<li class="xxim_online" id="xxim_online">'

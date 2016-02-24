@@ -165,8 +165,39 @@ i.xxim_online_i{
  background: green;
 }
 
-
-
-
-
-
+.emoji-con{
+ width: 321px;
+ position: absolute;
+ z-index: 100;
+ top: -160px;
+ border-right: 1px solid #d3e4f0;
+ border-bottom: 1px solid #d3e4f0;
+ display: none;
+}
+.emoji-con.active{
+ display: block;
+}
+.emoji-one{
+ float: left;
+ width: 31px;
+ height: 31px;
+ text-align: center;
+ vertical-align: middle;
+ line-height: 40px;
+ background: #f6fbfe;
+ border-left: 1px solid #d3e4f0;
+ border-top: 1px solid #d3e4f0;
+ cursor: pointer;
+}
+.chat-emoji{
+ position: relative;
+ top: 2px;
+}
+.chat-his{
+ position: absolute;
+ background: #fff;
+ left: 626px;
+ width: 266px;
+ height: 491px;
+ border:1px solid #ccc;
+}
